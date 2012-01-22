@@ -1,0 +1,80 @@
+.left{
+	float:left;
+ }
+ 
+ .right{
+	float: right;
+ }
+ 
+.container{
+	overflow:hidden;
+}
+
+.roundbox{
+  -moz-border-radius: 10px;
+  -webkit-border-radius: 10px;
+}
+
+.clear{
+	clear: both;
+}
+
+.hidden{
+	display: none;
+}
+
+*{
+ font-size: 12px; 
+}
+
+textarea{
+ width: 300px;
+ height: 120px;
+}
+
+.dinamic{
+	overflow: hidden;
+}
+
+img, input[type=image]{
+	vertical-align: middle;
+}
+
+a, a:visited, a:hover, a:link{
+	text-decoration:none;
+	color: black;
+	font-weight: bold;
+	display:inline-block;
+	outline: none;
+}
+
+
+a img{
+	text-decoration: none;
+	border: none;
+	outline: none;
+}
+
+a.icon {
+	display:inline-block;
+}
+
+
+a.icon img{
+	
+	min-width: 30px;
+	height: 30px;
+}
+
+img.icons{
+	width: 30px;
+}
+
+.model{
+	display:none;
+}
+
+.dialog{
+	display:none;
+}
+

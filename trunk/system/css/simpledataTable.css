@@ -1,0 +1,26 @@
+table.dataTable{
+	border: 1px solid #4297D7;
+	border-radius: 5px;
+}
+
+
+table.dataTable thead th{
+	padding-top: 5px;
+	padding-bottom: 5px;
+}
+
+table.dataTable tbody tr{
+	padding: 5px;
+	height: 30px;
+}
+
+table.dataTable tbody tr td{
+	background-color: #EAF0F5;
+	padding-left: 10px;
+}
+
+
+table.dataTable tbody tr:nth-child(2n+1) td{
+   background-color: #87B6D9;
+   color: white;
+}

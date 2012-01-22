@@ -1,0 +1,8 @@
+------------------------
+29/05/2009
+
+Se ha incluido el soporte de ORMConditions para la generacion de las condiciones de la consulta.
+Se ha actualizado la version de adodb.
+Se ha reescrito el codigo de WhereAnd y WhereOr como versiones simplificadas de ORMConditions.
+Se ha corregido un bug en WhereOr
+

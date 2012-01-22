@@ -1,0 +1,114 @@
+div.form{
+	margin:0 auto;
+	width:710px; 
+	background: none repeat scroll 0 0 #EFF5FB; 
+	border: 1px solid #DEDEDE;  
+	border-radius: 5px;
+	overflow: hidden;
+}
+
+form.form{
+	width: 710px;
+	margin: 15px;
+	font-size: 14px;
+	overflow: hidden;
+}
+
+form.form > div{
+ padding-top: 3px;
+ padding-bottom: 3px;
+}
+
+form.form > div label{
+ display:inline-block;
+ width: 200px;
+ text-align: right; 
+	vertical-align:top;
+	margin-top: 5px;
+}
+
+form.form > div div.error{
+	padding-left: 105px;
+	margin-top: 10px;
+	color:#560808;
+	display:none;
+}
+
+form.form > div.wrong div.error{
+	display:block;
+}
+
+
+form.form div.fileuploader{
+	display: inline-block;
+	vertical-align: top;
+}
+
+form.form .qq-upload-button{
+	vertical-align: middle;
+}
+
+form.form .qq-upload-button, form.form .qq-upload-list{
+	display: inline-block;
+}
+
+form.form div.imagePreview{
+	text-align:center;
+}
+
+form.form div.actions{
+ margin-top: 10px;
+ clear:both;
+}
+
+form.form div.actions *{
+ float:right;
+}
+
+input.textbox, 
+input.combobox{
+	height: 20px;
+	width: 300px;	
+	color: #000000;
+    font: 15px Arial,Helvetica,sans-serif;
+    padding: 4px;
+}
+
+input.combobox{
+	background-color: white;
+	border-color: #CDCDCD;
+	border-style: solid;
+	border-width: 1px;
+	border-radius: 4px;
+	padding: 1px;
+}
+
+input.button, input.submit{
+	background-color: #5FB404;
+	height: 30px;
+	width: 100px;
+	color: white;
+	font-size: 14px;
+	font-weight: bold;
+	
+    background: -webkit-linear-gradient(#74DF00, #5FB404);
+    background: -moz-linear-gradient(#74DF00, #5FB404);
+    background: -o-linear-gradient(#74DF00, #5FB404);
+    border-radius: 8px 8px 8px 8px;
+}
+
+form.validable .error{
+	border: 2px solid #8F3A3A;
+}
+
+form.validable .errormessage{
+	display:none;
+}
+
+form.form textarea{
+	width: 400px;
+	height: 200px;
+}
+
+
+

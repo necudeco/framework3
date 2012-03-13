@@ -1,5 +1,12 @@
 <?php
 
+require_once('app/config.php');
+
+$domain = $_SERVER['HTTP_HOST'];
+if ( file_exists("app/config.$domain.php") ){
+	require("app/config.$domain.php");
+}
+
 global $config;
 
 function autoloadModels($className){
@@ -140,9 +147,7 @@ class App{
 		$response['baseURL'] = $response['serverProtocol']."://".$_SERVER['SERVER_NAME']."$serverPort".$response['baseURL'];
 		$response['baseURL'] = $config['baseURL'];
 		
-//debug($_SERVER);	
-//debug($response);
-//		$response['module'] = $modulo;
+
 		return $response;
 	}
 }

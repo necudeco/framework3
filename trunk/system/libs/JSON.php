@@ -71,7 +71,7 @@ function jsonEncode($obj)
 	}
 	
 	$json_string = '"'.addslashes((string)$obj).'"';
-	$json_string = '"'.(string)$obj.'"';
+	//$json_string = '"'.(string)$obj.'"';
 	
 	$json_string = preg_replace('/[\r]+/', "\\r", $json_string);
 	$json_string = preg_replace('/[\n]+/', "\\n", $json_string); 

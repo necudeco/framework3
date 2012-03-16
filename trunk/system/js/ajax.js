@@ -64,11 +64,11 @@ function getData(params, fsuccess, ferror){
 			}
 		},
 		error: function(jqXHR, textStatus, errorThrown){  
-			debug("ERROR GEDATA AJAX",jqXHR, textStatus, errorThrown);
+			
 			var r = jqXHR.responseText;
-			console.log(r);
+			
 			var o = eval(r);
-			console.log(o);
+			
 			$(dlgWait).dialog('close');
 		}
 	};

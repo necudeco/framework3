@@ -64,11 +64,9 @@ function getData(params, fsuccess, ferror){
 			}
 		},
 		error: function(jqXHR, textStatus, errorThrown){  
-			
 			var r = jqXHR.responseText;
-			
-			var o = eval(r);
-			
+			var o = eval('('+r+')');
+			eval('fsuccess(o.response)');
 			$(dlgWait).dialog('close');
 		}
 	};

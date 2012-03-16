@@ -50,7 +50,7 @@ function jsonEncode($obj)
 		$barray = true;
 		$j = 0;
 		foreach( $obj as $k => $i)
-		{	
+		{
 			$i = jsonEncode($i);
 	           	$response[$j] = "\"$k\":$i";
 			
@@ -71,7 +71,7 @@ function jsonEncode($obj)
 	}
 	
 	//$json_string = '"'.addslashes((string)$obj).'"';
-	$json_string = '"'.(string)addslashes($obj).'"';
+	$json_string = '"'.(string)$obj.'"';
 	
 	$json_string = preg_replace('/[\r]+/', "\\r", $json_string);
 	$json_string = preg_replace('/[\n]+/', "\\n", $json_string); 

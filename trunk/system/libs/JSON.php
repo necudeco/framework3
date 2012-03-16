@@ -70,7 +70,7 @@ function jsonEncode($obj)
 			return "{".$response."}";
 	}
 	
-	//$json_string = '"'.addslashes((string)$obj).'"';
+	$json_string = '"'.addslashes((string)$obj).'"';
 	$json_string = '"'.(string)$obj.'"';
 	
 	$json_string = preg_replace('/[\r]+/', "\\r", $json_string);

@@ -5,14 +5,12 @@ $(document).ready(function()
 	{
 		var title = '';
 		title = $(obj).attr("title");
-		if ( title == undefined ) title = '';
-		
+		if ( title == undefined ) title = '';		
 		var resizable = $(obj).attr("resizable") || 'false';
 		resizable = ( resizable == 'true' )?true:false;
-		
 		var width = 'auto';
 		if ( $(obj).attr("width") != undefined ) width = $(obj).attr("width");
-				  
+		
 		$(obj).dialog(
 		{
 			autoOpen:false,
@@ -24,14 +22,10 @@ $(document).ready(function()
 			resizable: resizable,
 			overlay: {opacity:1, background:'black'},
 			open:function(){
-
 				if ( $(obj).hasClass("notitle") ) $(obj).parent().find(".ui-dialog-titlebar").hide();
-
 				$(obj).find(".firstelement").focus();
-				
 				var f_open = "open_"+$(obj).attr("id");
 				if ( eval("typeof("+f_open+")") == 'function' ) { eval(f_open+"(this)"); }
-				
 				$(obj).trigger("open");
 			},
 			close:function(){

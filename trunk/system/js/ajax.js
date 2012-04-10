@@ -21,7 +21,7 @@ function getData(params, fsuccess, ferror){
 			}
 	
 		},
-                dataFilter: function(data, type){ console.log(data);
+                dataFilter: function(data, type){ //console.log(data);
                     if ( type == 'json'){
                         var str = data;
                         str=str.replace(/\\'/g,'\'');
@@ -33,7 +33,7 @@ function getData(params, fsuccess, ferror){
                     return data;
 
                 },
-		success: function(response){ console.log(response);
+		success: function(response){ //console.log(response);
 //			console.log(response, typeof(response));
 			if ( typeof(response) == 'string' && dataType == 'json' ){
 			
@@ -63,7 +63,7 @@ function getData(params, fsuccess, ferror){
 				}
 			}
 		},
-		error: function(jqXHR, textStatus, errorThrown){  
+		error: function(jqXHR, textStatus, errorThrown){
 			var r = jqXHR.responseText;
 			var o = eval('('+r+')');
 			eval('fsuccess(o.response)');

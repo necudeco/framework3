@@ -228,10 +228,8 @@ abstract class ControllerBase
 	public function Run()
 	{	
 
-		$this->event = "200";
-	
+		$this->event = "200";	
 		$this->action = ( ($this->action = array_shift($this->args["params"])) == null ) ? $this->defaultaction: $this->action;
-		
 		$this->type 	= ( isset($_REQUEST['ajax']) )?($_REQUEST['ajax']=='xml')?'xml':'json':'Action';
 		$this->ftype 	= ( isset($_REQUEST['ajax']) )?'Ajax':'Action';
 		
@@ -245,10 +243,7 @@ abstract class ControllerBase
 			$this->event = "200";
 			if ( array_key_exists($this->action, $this->route) ){
 				$className = $this->route[$this->action];
-
-
 				global $path;
-
 				$filename = strtolower("$className.php");
 
 				//require_once("${path}app/controllers/$module/$filename");
@@ -280,27 +275,40 @@ abstract class ControllerBase
 			return cIndex::__404();
 		}
 		return cIndex::__403();
-
 	}
 
 	
 	protected function __404()
 	{
-		if ( file_exists("app/views/$this->module/404.html")){
+		//if ( file_exists("app/views/$this->module/404.html")){
+		if ( file_exists("app/views/errors/404.html")){
+			$this->view->assign('heading', 'Page Not Found');
+			$this->view->assign('message', '<p>Lo sentimos la p&aacute;gina no se encuentra en este servidor.</p>');			
 			if ( file_exists("app/views/$this->module/index.html")){
-				$this->view->assign("content","$this->module/404.html");
-				$this->view->display("$this->module/index.html");	
+				$this->view->assign("content","errors/404.html");
+				$this->view->display("$this->module/index.html");
 			}else{
-				$this->view->display("$this->module/404.html");
+				$this->view->display("errors/404.html");
 			}
 		}else{
-			die("URL dont exists");	
+			die("URL dont exists");
 		}
 	}
 	
-	protected static function __403($message=null)
+	protected function __403($message=null)
 	{
-		die("No tiene permisos");
+		if ( file_exists("app/views/errors/403.html")){
+			$this->view->assign('heading', 'Forbidden');
+			$this->view->assign('message', '<p>Lo sentimos pero no tiene permisos para acceder al recurso solicitado.</p>');			
+			if ( file_exists("app/views/$this->module/index.html")){
+				$this->view->assign("content","errors/403.html");
+				$this->view->display("$this->module/index.html");
+			}else{
+				$this->view->display("errors/403.html");
+			}
+		}else{
+			die("No tiene permisos");
+		}
 	}
 	
 	// Establece si el usuario actual tiene acceso al modulo solicitado
@@ -421,13 +429,9 @@ abstract class ControllerBase
 			}
 		}
 
-
-
-    	$objs = new ORMCollection($className);
+    	$objs = new ORMCollection($className);    	
     	
-    	
-    	if ( $cond != null ) $objs = $objs->whereCondition($cond);
-    	
+    	if ( $cond != null ) $objs = $objs->whereCondition($cond);    	
 //		$count = count($objs);
 
 		if ( $postProcess === true ){
@@ -438,9 +442,7 @@ abstract class ControllerBase
 		}else{
 			return $this->limit($objs,$offset,$limit);
 		}
-
 	}
-
 
 	public function limit($obj, $o, $l){
 		$response = array();

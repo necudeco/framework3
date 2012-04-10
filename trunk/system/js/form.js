@@ -8,8 +8,15 @@ function loadForm(frm, data){
 		  obj = $(frm).find("[name="+k+"]").get(0);
 		  if ( obj == undefined ) return true;
 				 
-		  if ( obj.tagName == 'INPUT' )
+		  if ( obj.tagName == 'INPUT' ){
+		  		
 			 $(obj).val(data[k]);
+		  }
+		  
+		  if ( obj.tagName == 'SELECT' ){
+		  		
+			 $(obj).val(data[k]);
+		  }
 			 
 		  if ( $(obj).hasClass("dt-date") ){
 			var val = data[k];
@@ -85,9 +92,13 @@ $(document).ready(function(){
 	// Evitamos el molesto autocomplete del browser
 	$("form").attr("autocomplete","off");
   
-  $("form.ajax").bind('submit',function(e){
+  	$("form.validate").each(function(){
+  		$(this).validate();
+  	});
+  
+  	$("form.ajax").bind('submit',function(e){
 		e.preventDefault();
-		
+
 		var frm = this;
 		
 		if ( typeof(CKEDITOR) == 'object'){
@@ -97,7 +108,10 @@ $(document).ready(function(){
         	}
 		}
 
-		
+		if ( $(frm).hasClass("validate") ){
+			
+			if ( ! $(frm).valid() ) return false;
+		}
 		
 		if ( $(frm).hasClass("validable") ){
 		  if ( ! validate.validateForm(frm) ) return false;
@@ -111,7 +125,7 @@ $(document).ready(function(){
 		var dataString = $(this).serialize();
 		var dataType = $(this).attr("dataType") || 'json';
 
-		getData( { url:url, data:dataString, dataType:dataType }, function(response){
+		getData( { url:url, data:dataString, dataType:dataType }, function(response){ 
 			$(frm).trigger('success',response);
 		});
 		/*
@@ -198,7 +212,7 @@ $(document).ready(function(){
 							
 							$(file).append(span);
 							
-							$(file).css("width","60%");
+							$(file).css("width",200);
 							$(file).css("text-overflow","ellipsis");
 							
 							$(div).append(file);
@@ -222,7 +236,6 @@ $(document).ready(function(){
 		$(document).append(dlgWait);
 		dialog(dlgWait);
 		$(dlgWait).parent().find(".ui-dialog-titlebar").hide();
-		
 		
 		new qq.FileUploader({
                 element: fu,
@@ -266,9 +279,6 @@ $(document).ready(function(){
 		e.preventDefault();
 		var li = $(this).parents("li").eq(0).remove();
 	});
-
-
-
 	
 	if ( typeof(CKEDITOR)  == 'object' ){
 			$("form textarea.rich").each(function(){

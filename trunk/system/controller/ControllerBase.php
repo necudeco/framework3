@@ -343,7 +343,7 @@ abstract class ControllerBase
         $pathinfo = pathinfo($file->getName()); 
         $filename = $pathinfo['filename'];
         $rand = rand(100, 999);
-        $ext = $pathinfo['extension'];		
+        $ext = $pathinfo['extension'];
 
 		$path = getcwd();
 

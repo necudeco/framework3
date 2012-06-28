@@ -144,8 +144,9 @@ class App{
 		
 		
 		
-		$response['baseURL'] = $response['serverProtocol']."://".$_SERVER['SERVER_NAME']."$serverPort".$response['baseURL'];
+		//$response['baseURL'] = $response['serverProtocol']."://".$_SERVER['SERVER_NAME']."$serverPort".$response['baseURL'];
 		$response['baseURL'] = $config['baseURL'];
+		$response['index'] = $config['index'];
 		
 
 		return $response;

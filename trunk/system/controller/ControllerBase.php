@@ -486,8 +486,9 @@ abstract class ControllerBase
 	public function redirect($module=null, $controller=null, $action=null, $params="")
 	{	
 		$baseURL = 	$this->args['baseURL'];
+		$index = $this->args['index'];
 		
-		$url = "${baseURL}";
+		$url = "${baseURL}${index}/";
 		
 		if ( $module != null ){
 			$url .= "${module}";

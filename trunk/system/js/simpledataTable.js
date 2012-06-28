@@ -160,6 +160,8 @@ $sdt.fn.extend({
 			var tr = obj.newTR();
 			obj.loadTR(tr,this);
 		});
+		
+		$(this.table).trigger('dataloaded');
   },
   
   getData:function(url, params,  root){

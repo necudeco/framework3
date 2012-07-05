@@ -3,7 +3,7 @@
 include("../../app/config.php");
 
 
-if ( @$config['upgrade'] !== @$_REQUEST['upgrade'] ) die('wrong auth key');
+if ( @$config['upgrade'] !== @$_REQUEST['upgrade'] ) die('wrong upgrade key');
 
 
 function cp($source, $dest, $dontcopy = array()){

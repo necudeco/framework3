@@ -89,6 +89,12 @@ class ORMConnection{
 		}
 		return stripslashes($value);
 	}
+	
+	public static function emptyDatabase(){
+	    $conn = ORMConnection::getConnection();
+	    
+	    $conn->emptyDatabase();
+	}
 
 }
 

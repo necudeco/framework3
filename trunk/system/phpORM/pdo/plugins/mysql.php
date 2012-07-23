@@ -139,10 +139,21 @@ class ORMPDOMYSQL extends ORMPDO{
 		//$rs->closeCursor();
 		return $response;
 	}
-	/*
-	public function quote($value){
-		return	$this->pdo->quote$($value);
-	}*/
+
+	public function emptyDatabase(){
+		$sql = "show tables;";
+		$tables = $this->__execute();
+		foreach( $tables as $table ){
+			$this->emptyTable($table);
+		}
+	}
+	
+	public function emptyTable($tablename){
+		$sql = "truncate $tablename";
+		
+		$this->__execute($sql);
+	}
+	
 }
 
 

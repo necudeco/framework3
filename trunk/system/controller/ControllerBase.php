@@ -83,8 +83,8 @@ abstract class ControllerBase
 	private function ActionError($e)
 	{
 		global $smarty;
-		$smarty->clear_all_assign();
-		$smarty->assign('nroerror',$e->getCode());
+		$smarty->clearAllAssign();
+		$smarty->assign('error',$e);
 		die($smarty->fetch('error.html'));		
 	}
 	

@@ -330,7 +330,7 @@ abstract class ControllerBase
 	}
 	
 	
-	protected function uploadFile($uploadDir,$parameter="qqfile"){
+	protected function uploadFile($uploadDir,$parameter="qqfile",$add=true){
 	
 	global $path;
 		
@@ -342,7 +342,7 @@ abstract class ControllerBase
 	if ( $file !== false ){
         $pathinfo = pathinfo($file->getName()); 
         $filename = $pathinfo['filename'];
-        $rand = rand(100, 999);
+        $rand = $add==true?rand(100, 999):"";
         $ext = $pathinfo['extension'];
 
 		$path = getcwd();

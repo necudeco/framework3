@@ -488,7 +488,9 @@ abstract class ControllerBase
 		$baseURL = 	$this->args['baseURL'];
 		$index = $this->args['index'];
 		
-		$url = "${baseURL}${index}/";
+		//$url = "${baseURL}${index}/";
+		
+		$url = "$baseURL";
 		
 		if ( $module != null ){
 			$url .= "${module}";

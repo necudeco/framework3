@@ -135,10 +135,10 @@ abstract class ControllerBase
 	{	
 		// No mostrar errores menores que puedan afectar al JSON
 		error_reporting(E_ERROR);
-		
+		/*
 		if ( !isset($_REQUEST['__debug']) )
 			header("Content-type: text/json");
-		
+		*/
 		$response = array();
 		try{
 			$aux = $this->callMethod($actionName,'Json');  

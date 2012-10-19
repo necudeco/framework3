@@ -12,6 +12,9 @@ include_once("ACL.php");
 include_once("system/libs/JSON.php");
 include_once("system/libs/FException.php");
 
+include_once("system/controller/RouteBase.php");
+
+
 abstract class ControllerBase
 {
 
@@ -241,13 +244,17 @@ abstract class ControllerBase
 			$this->event = "403";
 		}else{
 			$this->event = "200";
-			if ( array_key_exists($this->action, $this->route) ){
-				$className = $this->route[$this->action];
+			
+			
+			
+			if ( method_exists($this, $actionName) or method_exists($this,"__call")){
+					$execute = $this->type."Run";
+					return $this->$execute($actionName);
+			}elseif ( $className = Route::getController($this->action) ){
+				//$className = $this->route[$this->action];
 				global $path;
 				$filename = strtolower("$className.php");
 
-				//require_once("${path}app/controllers/$module/$filename");
-				
 				$module = $this->module;
 				if ( $module == "" ){
 					global $config;
@@ -261,15 +268,11 @@ abstract class ControllerBase
 				$mod->parent = get_class($this);
 
 				return $mod->Run();
-
 			}else{  
-				if ( method_exists($this, $actionName) or method_exists($this,"__call")){
-					$execute = $this->type."Run";
-					return $this->$execute($actionName);
-				}else{ 
+				
 					$this->event = "404";	//debug($this);
 					return cIndex::__404();
-				}
+				
 			}
 
 			return cIndex::__404();

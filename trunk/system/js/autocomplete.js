@@ -3,7 +3,7 @@ $(document).ready(function(){
   
   $("input.autocomplete").each(function(){
 	 var inp = this;
-	 
+	 console.log(this);
 	 var defaultvalue = $(inp).val();
 	 
 	 var root = $(inp).attr("root");
@@ -48,7 +48,8 @@ $(document).ready(function(){
 	      value = $(inp).attr("val") || 'value';
 
 		  $.ajax({url:url, data:data, dataType:'json', success: function(response){
-root = $(inp).attr("root");
+
+			root = $(inp).attr("root");
 
 			 if ( root == undefined ) r = response;
 			 else r = eval('response.'+root);
@@ -74,6 +75,12 @@ root = $(inp).attr("root");
 		  $(inp).trigger('change', item );
 		  $(inp).trigger('selected', item );
 		  
+		},
+		response: function(e, ui){
+			/*var items = ui.content;
+			if ( items.length == 0 ){
+				items = [{label:'Agregar Paciente', value:'-1'}];
+			}*/
 		}
 	 });
 	 $(inp).val(defaultvalue);

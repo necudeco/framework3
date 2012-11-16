@@ -33,7 +33,7 @@ $(document).ready(function(){
 	 
 	 $(inp).autocomplete({
 		 minLength: minLength,
-		source: function(req, fn){
+		 source: function(req, fn){
 		  var data = {};
 		  data.ajax='ajax';
 		  data.term = req.term; 

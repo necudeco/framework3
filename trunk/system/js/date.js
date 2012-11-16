@@ -82,5 +82,18 @@ Date.replaceChars = {
 	}
 
 $(document).ready(function(){
-  $("input.datepicker").datepicker();
+	
+  $("input.datepicker").each(function(){
+  	var opt = {};
+  	console.log(this);
+  	if ( $(this).hasClass("changeYear") ){
+  		opt.changeYear = true;
+  	}
+  	
+  	if ( $(this).attr("data-from") != undefined ){
+  		opt.minDate = $(this).attr("data-from")
+  	}
+  	
+  	$(this).datepicker(opt);
+  });
 });

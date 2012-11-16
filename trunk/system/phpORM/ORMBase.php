@@ -556,7 +556,7 @@ abstract class ORMBase implements Iterator, Countable
 		{
 			
 		}else{
-			$this->fields[$autoinc]=$conn->Insert_ID();
+			$this->fields[$autoinc]=$conn->Insert_ID($autoinc);
 		}		
 	}
 	 

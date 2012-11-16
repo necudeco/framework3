@@ -77,7 +77,7 @@ class ORMPDOMYSQL extends ORMPDO{
 	
 	}
 	
-	public function Insert_ID(){
+	public function Insert_ID($idColumn){
 		return $this->pdo->lastInsertId();
 	}
 	

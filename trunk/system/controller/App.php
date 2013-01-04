@@ -13,13 +13,15 @@ function autoloadModels($className){
 	$fileName = strtolower($className);
 	$pathName = "app/models/$fileName.php";
 	
-	if ( ! file_exists($pathName) ){
-		$fn_autload = spl_autoload_functions();
-		$fn_autload[1]($className);
-		return false;
+	if ( file_exists($pathName) ){
+		require_once($pathName);
+		return true;
 	}
 	
-	require_once($pathName);
+		
+	$fn_autload = spl_autoload_functions();
+	$fn_autload[1]($className);
+	return false;
 }
 
 spl_autoload_register('autoloadModels', true);

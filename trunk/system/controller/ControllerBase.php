@@ -250,9 +250,9 @@ abstract class ControllerBase
 			if ( method_exists($this, $actionName) or method_exists($this,"__call")){
 					$execute = $this->type."Run";
 					return $this->$execute($actionName);
-			}elseif ( $className = Route::getController($this->action) ){
+			}elseif ( $className = Route::getController($this->action, $this->module) ){
 				//$className = $this->route[$this->action];
-				global $path;
+			/*	global $path;
 				$filename = strtolower("$className.php");
 
 				$module = $this->module;
@@ -263,7 +263,7 @@ abstract class ControllerBase
 				if ( $module != "" ) $module .="/";
 				require_once("${path}app/controllers/${module}${filename}");
 				
-
+*/
 				$mod = new $className($this->args);
 				$mod->parent = get_class($this);
 

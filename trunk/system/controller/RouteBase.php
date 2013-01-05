@@ -14,9 +14,8 @@ class RouteBase {
 	
 		if ( $url_alias == 'index' ) return false;
 		
-		$url_alias = strtolower($url_alias);
 		$className = "c".ucfirst($url_alias);
-		$filename = "$className.php";
+		$filename = strtolower("$className.php");
 		
 		if ( $module == "" ){
 			$module = $config['module']['default'];

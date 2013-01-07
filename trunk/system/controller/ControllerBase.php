@@ -513,6 +513,13 @@ abstract class ControllerBase
 		
 		header("Location: $url");
 	}
+	
+	/**
+	* Esta funcion se encarga de listar todos los elementos de un Modelo
+	*/
+	protected function listAction(){
+	  $this->view->assign("content","TEXTO DE SALIDA");
+	}
 
 
 }

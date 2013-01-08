@@ -281,7 +281,7 @@ abstract class ControllerBase
 	}
 
 	
-	protected function __404()
+	protected function _404()
 	{
 		//if ( file_exists("app/views/$this->module/404.html")){
 		if ( file_exists("app/views/errors/404.html")){
@@ -298,7 +298,7 @@ abstract class ControllerBase
 		}
 	}
 	
-	protected function __403($message=null)
+	protected function _403($message=null)
 	{
 		if ( file_exists("app/views/errors/403.html")){
 			$this->view->assign('heading', 'Forbidden');

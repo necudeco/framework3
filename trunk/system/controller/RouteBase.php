@@ -23,12 +23,13 @@ class RouteBase {
 		
 		$path = $config['root'];
 		$fullPath = false;
-
+		
+		
 		if ( file_exists($path."app/controllers/$module/".$filename) ){
 			$fullPath = $path."app/controllers/$module/".$filename;
 			
 		}
-		
+	
 		if ( $fullPath === false ) return false;
 		
 		require_once($fullPath);

@@ -335,7 +335,7 @@ abstract class ControllerBase
 	
 	protected function uploadFile($uploadDir,$parameter="qqfile",$add=true){
 	
-	global $path;
+	global $config;
 		
 	include_once("${path}system/libs/qqUploadedFile.php");
 	
@@ -348,13 +348,16 @@ abstract class ControllerBase
         $rand = $add==true?rand(100, 999):"";
         $ext = $pathinfo['extension'];
 
-		$path = getcwd();
-
-		$completeFilename = "${filename}${rand}.${ext}";
+		$path = $config['root'];
+		$filename = md5(time());
+		$completeFilename = "${filename}.${ext}";
 		$realfilename = "${path}${uploadDir}/$completeFilename";
 		
-		$file->save($realfilename);
-		return $completeFilename;
+		if ( $file->save($realfilename) )
+			return $completeFilename;
+		else {
+			return false;
+		}
 	}
 	else 
 		return false;

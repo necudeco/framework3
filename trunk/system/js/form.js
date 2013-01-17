@@ -161,7 +161,7 @@ $(document).ready(function(){
 		var divUploadList = document.createElement("div");
 		$(divUploadList).addClass("uploadList");
 		$(divUploadList).addClass("dinamic");
-		
+		/*
 		$(fu).data('addFile', function(response){
 
 						var div = document.createElement("div");
@@ -224,7 +224,7 @@ $(document).ready(function(){
 						$(divUploadList).append(div);
 						return div;
 		});
-		
+		*/
 		if ( $(fu).hasClass("thumbnail") ) $(divUploadList).addClass("thumbnail");
 		
 		var dlgWait = document.createElement("div");
@@ -254,17 +254,18 @@ $(document).ready(function(){
 							$(dlgWait).dialog('open');
                 },
                 onComplete: function(id, filename, response){
+                	
 //						var li = $(fu).find(".qq-upload-list li:last");//.eq(id);
 						$(dlgWait).dialog('close');
 						if ( response.success == false ) {
 							msgBox(response.errormessage);
 							return false;
-						}
+						}/*
 						var fn = $(fu).data("addFile");
-						var div = fn(response);
+						var div = fn(response);*/
 // 						if ( typeof($.unblockUI) == 'function' ) $.unblockUI();
 						
-						$(fu).trigger('onComplete',{element:div, filename:filename, response:response});
+						$(fu).trigger('itemLoaded',{element:fu, response: response.response.data});
 				}
 			});
 		

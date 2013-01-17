@@ -237,9 +237,9 @@ $(document).ready(function(){
 		dialog(dlgWait);
 		$(dlgWait).parent().find(".ui-dialog-titlebar").hide();
 		
-		new qq.FileUploader({
+		new qq.FileUploaderBasic({
                 element: fu,
-                //button: 'Cargar',
+                button: fu,
                 action: $(fu).attr("action"),
                 debug: true,
                 buttonTitle: button,

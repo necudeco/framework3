@@ -490,8 +490,9 @@ abstract class ControllerBase
 	
 	
 	public function redirect($module=null, $controller=null, $action=null, $params="")
-	{	
-		$baseURL = 	$this->args['baseURL'];
+	{
+		global $config;	
+		$baseURL = 	$config['baseURL'];
 		$index = $this->args['index'];
 		
 		//$url = "${baseURL}${index}/";

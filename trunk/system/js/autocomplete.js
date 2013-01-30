@@ -65,10 +65,7 @@ function enable_autocomplete(inp){
 		  
 		},
 		response: function(e, ui){
-			/*var items = ui.content;
-			if ( items.length == 0 ){
-				items = [{label:'Agregar Paciente', value:'-1'}];
-			}*/
+			$(inp).trigger('response', ui);
 		}
 	 });	
 }

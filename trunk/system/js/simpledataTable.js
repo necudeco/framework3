@@ -42,6 +42,9 @@ $sdt.fn.extend({
 	 $(this.table).data("params",{ajax:'ajax'});
 	 
 	 this.loadData();
+	 
+	 
+	 
   },
   /**
   *
@@ -290,6 +293,8 @@ $("table.dataTable thead th a.order").live('click', function(e){
 
 
 	$(table).dataTable("loadData");
+	
+	
 });
 
 })(jQuery);

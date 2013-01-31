@@ -139,14 +139,17 @@ $sdt.fn.extend({
   
   changePage: function(e){
 		e.preventDefault();
-	  console.log(this);
-	  var obj = $(this).parents("table.dataTable").eq(0);
-	  var page = $(this).text();
 	  
-	  var offset = ( page - 1 ) * 10;
-	  $(obj).attr("data-offset",offset);
+		var obj = $(this).parents("table.dataTable").eq(0);
+		var page = $(this).text();
 	  
-	  $(obj).dataTable("loadData");
+		$(this).parent().children().removeClass("activate");
+		$(this).addClass("activate");
+		
+		var offset = ( page - 1 ) * 10;
+		$(obj).attr("data-offset",offset);
+	  
+		$(obj).dataTable("loadData");
 	  
   },
   

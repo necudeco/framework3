@@ -1,6 +1,3 @@
-$(document).ready(function()
-{
-
 	dialog = function(obj)
 	{
 		var title = '';
@@ -120,6 +117,7 @@ $(document).ready(function()
 		}); //dialog
 	};
 
+$(document).ready(function(){
 
 	$("div.dialog").each(function()
 	{

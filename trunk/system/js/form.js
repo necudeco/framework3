@@ -161,70 +161,7 @@ $(document).ready(function(){
 		var divUploadList = document.createElement("div");
 		$(divUploadList).addClass("uploadList");
 		$(divUploadList).addClass("dinamic");
-		/*
-		$(fu).data('addFile', function(response){
 
-						var div = document.createElement("div");
-						$(div).css("position","relative");
-						
-						var inp = document.createElement("input");
-						$(inp).attr("type","hidden");
-						$(inp).attr("name",inputname);
-						$(inp).attr("value",response.filename);
-						
-						var del = document.createElement("a");
-						$(del).attr("href","#");
-						$(del).text("X");
-						$(del).css("vertical-align","top");
-						$(del).attr("title","Remover");
-						
-						$(del).bind('click', function(e){
-							e.preventDefault();
-							$(div).remove();
-						});
-						$(div).append(inp);
-						
-						if ( $(fu).hasClass("thumbnail") ){ //Mostrar thumbnails
-							$(div).addClass("left");
-							$(div).addClass("dinamic");
-							
-							var img = document.createElement("img");
-							$(img).addClass("thumbnail");
-							$(img).addClass("left");
-							var thumbnail_uri = $(fu).attr("thumbnail");
-							$(img).attr("src",eval(thumbnail_uri));
-							
-							$(div).append(img);
-							$(div).append(del);
-							$(del).css("top","5px");
-							$(del).css("float:right");
-							
-							
-						}else{ // Mostrar enlaces
-							var file = document.createElement("a");
-							$(file).attr("href",response.uri);
-							
-							var span = document.createElement("span");
-							$(span).css("display","inline-block");
-							$(span).css("width",200);
-							$(span).css("overflow","hidden");
-							$(span).text(response.filename);
-							
-							$(file).append(span);
-							
-							$(file).css("width",200);
-							$(file).css("text-overflow","ellipsis");
-							
-							$(div).append(file);
-							$(div).append("&nbsp;&nbsp;&nbsp;&nbsp;");
-							$(div).append(del);
-							
-						}
-						
-						$(divUploadList).append(div);
-						return div;
-		});
-		*/
 		if ( $(fu).hasClass("thumbnail") ) $(divUploadList).addClass("thumbnail");
 		
 		var dlgWait = document.createElement("div");

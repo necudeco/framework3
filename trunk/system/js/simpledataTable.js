@@ -198,8 +198,8 @@ $sdt.fn.extend({
     
   loadTR : function(tr,data){ 
 	  var obj = this;
-		$.each(data, function(i){ 
-			var td = $(tr).find("td."+i);
+		$.each(data, function(i){  
+			var td = $(tr).find("td."+i); 
 			obj.setValue(td,data[i]);
 			//$(td).text(data[i]);
 		});

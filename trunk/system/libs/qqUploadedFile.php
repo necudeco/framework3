@@ -37,7 +37,7 @@ class qqUploadedFileXhr {
     function getName() {
         return $_GET['qqfile'];
     }
-    function getSize() {
+    function getSize() {		
         if (isset($_SERVER["CONTENT_LENGTH"])){
             return (int)$_SERVER["CONTENT_LENGTH"];            
         } else {

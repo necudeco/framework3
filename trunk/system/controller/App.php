@@ -71,7 +71,7 @@ class App{
 		
 		if ( count($args['params']) > 0 ){
 			$modulo = $args['params'][0];
-			unset($args['params'][0]);
+		
 		}
 
 		if ( $modulo == '' ){
@@ -91,6 +91,8 @@ class App{
 			if (! file_exists($cindex_filename)){
 				$modulo = $config['modules']['default'];
 				$cindex_filename = "${path}app/controllers/${modulo}/cindex.php"; 
+			}else{
+				unset($args['params'][0]);
 			} 
 			require_once($cindex_filename); // || die("MODULE $cindex_filename NOT EXISTS. Please Config your 404.html page");
 

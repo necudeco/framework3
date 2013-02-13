@@ -268,8 +268,13 @@ abstract class ControllerBase
 				$mod->parent = get_class($this);
 
 				return $mod->Run();
-			}else{  
-				
+			}elseif ($this->defaultaction != "") {  
+					$execute = $this->type."Run"; 
+					
+					$this->args['params'] = array_merge(array($this->action), $this->args['params']);
+					$this->action = $this->defaultaction;
+					return $this->$execute($this->defaultaction."Action");
+			}else{
 					$this->event = "404";	//debug($this);
 					return cIndex::__404();
 				

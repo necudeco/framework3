@@ -148,7 +148,7 @@ $(document).ready(function(){
 	 * action: indica la URL donde se procesa la carga de archivos
 	 * title: el texto que se carga en el boton de subir
 	 */
-	$("form .fileuploader").each(function(){
+	$(".fileuploader").each(function(){  //console.log(this);
 		var fu = this;
 		var inputname = $(fu).attr("input") || 'file';
 		var limit = $(fu).attr("limit");
@@ -213,7 +213,7 @@ $(document).ready(function(){
 		
 	});
 	
-	$("form .fileuploader .qq-upload-delete").live('click',function(e){
+	$(".fileuploader .qq-upload-delete").live('click',function(e){
 		e.preventDefault();
 		var li = $(this).parents("li").eq(0).remove();
 	});

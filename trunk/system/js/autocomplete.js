@@ -16,7 +16,7 @@ function enable_autocomplete(inp){
 	 var minLength = $(inp).attr("minlength") || 1;
 	 if ( $(inp).hasClass("combobox")) minLength = 0;
 	 if(params!=null)	params = params.split(":");
-	
+
 	var _inp = $(inp).next();
 	
 	$(inp).autocomplete({
@@ -30,8 +30,8 @@ function enable_autocomplete(inp){
 
 			  	eval('data.'+params[i]+'= "'+$(inp).attr(params[i])+'"');
 			  }
-		  }
-		  url = $(inp).attr("href");
+		  }		
+		  url = $(inp).attr("href");		 
 	      label = $(inp).attr("label") || 'label';
 	      value = $(inp).attr("val") || 'value';
 
@@ -105,6 +105,7 @@ $(document).ready(function(){
 	 
 	 
 	 $(inp).val(hiddenlabel);
+	
 	 enable_autocomplete(inp);
 	 /*
 	 $(inp).autocomplete({
@@ -157,8 +158,7 @@ $(document).ready(function(){
 		}
 	 }); */
 	 $(inp).val(defaultvalue);
-  });
-  
+  });  
   
   $("input.combobox.autocomplete").each(function(){
      var inp = this;

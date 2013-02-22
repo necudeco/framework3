@@ -467,7 +467,7 @@ abstract class ControllerBase
 	}
 
 	public function saveAjax()
-	{
+	{		
 		if ( $this->model == '' ) return $this->__404();
 
 		$className = $this->model;

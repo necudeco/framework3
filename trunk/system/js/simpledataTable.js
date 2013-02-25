@@ -136,20 +136,31 @@ $sdt.fn.extend({
 
 		
   },
-  
+  currentPage: function(){
+  		var obj = this;  	
+  		
+  		//console.log($(obj.table).data("Page"));	
+  		var page = $(obj.table).data("Page");
+  		return page;
+  },  
   changePage: function(e){
-		e.preventDefault();
+
+	e.preventDefault();
+	var obj = $(this).parents("table.dataTable").eq(0);
+	var page = $(this).text();
+	
+	 $(obj).data("Page",page);	 
 	  
-		var obj = $(this).parents("table.dataTable").eq(0);
-		var page = $(this).text();
+     $(obj).trigger("changePage",page);	  
 	  
-		$(this).parent().children().removeClass("activate");
-		$(this).addClass("activate");
+
+	 $(this).parent().children().removeClass("activate");
+	 $(this).addClass("activate");
 		
-		var offset = ( page - 1 ) * 10;
-		$(obj).attr("data-offset",offset);
-	  
-		$(obj).dataTable("loadData");
+	 var offset = ( page - 1 ) * 10;
+	 $(obj).attr("data-offset",offset);
+
+	 $(obj).dataTable("loadData");
 	  
   },
   
@@ -216,7 +227,7 @@ $sdt.fn.extend({
 
 $.fn.dataTable = function(o){
   if ( typeof(o) == 'string' ){ 
-	 var ins = $(this).data('instance');
+	 var ins = $(this).data('instance'); 
 	 args = Array.prototype.slice.call(arguments, 1);
 	 if ( typeof(eval("ins."+o) ) == 'function' ){
 	 	eval("ins."+o+"()");

@@ -102,8 +102,7 @@ $(document).ready(function(){
 	 $(_inp).attr("value", hiddenvalue);
 	 $(inp).after(_inp);
 	 
-	 
-	 
+	 	 
 	 $(inp).val(hiddenlabel);
 	
 	 enable_autocomplete(inp);
@@ -188,7 +187,7 @@ $(document).ready(function(){
 					$(this).blur();
 					$(inp).autocomplete("search","");
 					$(inp).focus();
-			  });
+		});
   });
   
 });

@@ -109,8 +109,6 @@ class App{
 	
 	static public function breakURL()
 	{
-
-
 		global $config;
 
 		$_REQUEST = array_merge($_GET,$_POST);

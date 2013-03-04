@@ -340,37 +340,34 @@ abstract class ControllerBase
 	
 	protected function uploadFile($uploadDir,$parameter="qqfile",$add=true){
 	
-	global $config;
+		global $config;	
+		include_once("${path}system/libs/qqUploadedFile.php");	
 		
-	include_once("${path}system/libs/qqUploadedFile.php");
-	
-		
-	 $file = qqUploadedFile::get($parameter);
-	 
-	if ( $file !== false ){
-        $pathinfo = pathinfo($file->getName()); 
-        $filename = $pathinfo['filename'];
-        $rand = $add==true?rand(100, 999):"";
-        $ext = $pathinfo['extension'];
-
-		$path = $config['root'];
-		$filename = md5(time());
-		$completeFilename = "${filename}.${ext}";
-		$realfilename = "${path}${uploadDir}/$completeFilename";
-		
-		if ( $file->save($realfilename) )
-			return $completeFilename;
-		else {
-			return false;
+		$file = qqUploadedFile::get($parameter);
+	 	
+		if ($file !== false ){
+			
+        	$pathinfo = pathinfo($file->getName()); 
+        	$filename = $pathinfo['filename'];			
+        	$rand = $add==true?rand(100, 999):"";        	
+        	$ext = $pathinfo['extension'];			
+			$path = $config['root'];			
+			$filename = md5(time());			
+			$completeFilename = "${filename}.${ext}";
+			$realfilename = "${path}${uploadDir}/$completeFilename";			
+			if ( $file->save($realfilename) ){				
+				return $completeFilename;
+			}	
+			else {				
+				return false;
+			}
 		}
-	}
-	else 
-		return false;
+		else 
+			return false;
 	}
 	
 	public function uploadAjax(){
-		$filename = $this->uploadFile("upload");
-		
+		$filename = $this->uploadFile("upload");		
 		return $filename;
 	}
 	

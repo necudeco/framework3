@@ -7,6 +7,9 @@ class FException extends Exception{
 	public function __construct ($message = "", $params="", $code = 0, $previous = NULL ){
 		$this->params = $params;
 		
+		if ( @$config['log']['apache_log'] == true ){
+			error_log($message);
+		}
 		parent::__construct($message, $code, $previoius);
 	}
 	

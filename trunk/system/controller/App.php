@@ -69,47 +69,42 @@ class App{
 		//$smarty->addPluginsDir($config['root']."app". DIRECTORY_SEPARATOR."plugins".DIRECTORY_SEPARATOR );
 		$smarty->addPluginsDir($config['root']."app". DIRECTORY_SEPARATOR."plugins".DIRECTORY_SEPARATOR );
 		
+		$smarty->assign("baseURL",$config['baseURL']);	
+		
+		$modulo = "";
 		if ( count($args['params']) > 0 ){
 			$modulo = $args['params'][0];
 			unset($args['params'][0]);
 		}
-
-		if ( $modulo == '' ){
-			
-			if ( ! isset($config['modules']) ){
-				throw new Exception("Config file need default module definition");
-			}
-		
-			$modulo = $config['modules']['default'];
-		}
-		
-		$smarty->assign("baseURL",$config['baseURL']);
-		
 		try{
-			$args['module'] = $modulo;
-			$cindex_filename = "${path}app/controllers/${modulo}/cindex.php"; 
+			
+			$cindex_filename = "${path}app/controllers/${modulo}/cindex.php";
+			 
 			if (! file_exists($cindex_filename)){
-				// NO existe el modulo indicado
-				if ( file_exists("${path}app/views/404.html")){
-					if ( file_exists("${path}app/views/index.html")){
-						$smarty->assign('content','404.html');
-						$smarty->display('index.html');
-					}else{
-						$smarty->display('404.html');
-					}
-					return false;
-				}
-				die("MODULE NOT EXISTS");
+				if ( $modulo != "" ) array_unshift($args['params'],$modulo);
+				
+				$modulo = $config['modules']['default'];
+				$cindex_filename = "${path}app/controllers/${modulo}/cindex.php";
+				if (! file_exists($cindex_filename)){
+					throw new FException("NOT_MODULE");
+				}	 
+				
+			}else{
+				
 			} 
+			
+			$args['module'] = $modulo;
 			require_once($cindex_filename); // || die("MODULE $cindex_filename NOT EXISTS. Please Config your 404.html page");
 
 			$_Controller = new cIndex($args); 
 			$_Controller->Run();
 
 		}catch(Exception $e){
-			die("PROBLEMA MAYOR ".$e->getMessage());
-			debug($e);
+			//die("PROBLEMA MAYOR ".$e->getMessage());
+			throw $e;
 		}
+		
+		 
 	}
 	
 	static public function breakURL()

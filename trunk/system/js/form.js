@@ -168,7 +168,9 @@ $(document).ready(function(){
 		$(dlgWait).addClass("dialog")
 					.append('<p style="width: 300px;">Espere un momento por favor ...</p>')
 					.attr("id","dlgWait");
-					
+						
+		
+									
 		$("div#dlgWait").remove();
 		$(document).append(dlgWait);
 		dialog(dlgWait);
@@ -183,10 +185,12 @@ $(document).ready(function(){
                 inputName: inputname,
                 onSubmit: function(id, filename){
                 	var lis = $(divUploadList).find(">div");
+                	
                 	if ( limit != undefined && $(lis).length >= limit ){
                 		$(fu).trigger("error", {codeError:'LIMITEXPECTED'});
                 		return false;
                 	}
+                	$(fu).trigger("progress","");  //trigger agregado 08/03/2013
 //                 	if ( typeof($.blockUI) == 'function' ) $.blockUI();
 							$(dlgWait).dialog('open');
                 },
@@ -202,7 +206,7 @@ $(document).ready(function(){
 						var div = fn(response);*/
 // 						if ( typeof($.unblockUI) == 'function' ) $.unblockUI();
 						
-						$(fu).trigger('itemLoaded',{element:fu, response: response.response.data});
+						$(fu).trigger('itemLoaded',{element:fu, response: response.response.data});					
 				}
 			});
 		

@@ -326,7 +326,9 @@ qq.FileUploaderBasic.prototype = {
             maxConnections: this._options.maxConnections,   
             onProgress: function(id, fileName, loaded, total){                
                 self._onProgress(id, fileName, loaded, total);
-                self._options.onProgress(id, fileName, loaded, total);                    
+                self._options.onProgress(id, fileName, loaded, total);        
+                
+                            
             },            
             onComplete: function(id, fileName, result){
                 self._onComplete(id, fileName, result);
@@ -1194,8 +1196,9 @@ qq.extend(qq.UploadHandlerXhr.prototype, {
                 self._onComplete(id, xhr);                    
             }
         };
-
-        // build query string
+		
+		
+		// build query string
         params = params || {};
         params['qqfile'] = name;
         var queryString = qq.obj2url(params, this._options.action);
@@ -1219,7 +1222,8 @@ qq.extend(qq.UploadHandlerXhr.prototype, {
             this.log("xhr - server response received");
             this.log("responseText = " + xhr.responseText);
                         
-            var response;
+            var response;            	   
+            
                     
             try {
                 response = eval("(" + xhr.responseText + ")");
@@ -1235,7 +1239,8 @@ qq.extend(qq.UploadHandlerXhr.prototype, {
                 
         this._files[id] = null;
         this._xhrs[id] = null;    
-        this._dequeue(id);                    
+        this._dequeue(id);        
+                           
     },
     _cancel: function(id){
         this._options.onCancel(id, this.getName(id));

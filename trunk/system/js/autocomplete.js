@@ -7,6 +7,7 @@ function enable_autocomplete(inp){
 	 var label = $(inp).attr("label") || 'label';
 	 var value = $(inp).attr("val") || 'value';
 	 
+	 
 	 var hiddenvalue = $(inp).attr("hiddenvalue") || '';
 	 var hiddenlabel = $(inp).attr("hiddenlabel") || '';
 	 var displayhidden = ($(inp).attr("displayhidden")||false == "true")?true:false;
@@ -17,11 +18,8 @@ function enable_autocomplete(inp){
 	 if ( $(inp).hasClass("combobox")) minLength = 0;
 	 if(params!=null)	params = params.split(":");
 
-	var _inp = $(inp).next();
-	
-	$(inp).autocomplete({
-		 minLength: minLength,
-		 source: function(req, fn){
+
+	var fnsource = function(req, fn){
 		  var data = {};
 		  data.ajax='ajax';
 		  data.term = req.term; 
@@ -34,8 +32,9 @@ function enable_autocomplete(inp){
 		  url = $(inp).attr("href");		 
 	      label = $(inp).attr("label") || 'label';
 	      value = $(inp).attr("val") || 'value';
-
-		  $.ajax({url:url, data:data, dataType:'json', success: function(response){
+		  
+	 
+	  	  $.ajax({url:url, data:data, dataType:'json', success: function(response){
 
 			root = $(inp).attr("root");
 
@@ -54,9 +53,20 @@ function enable_autocomplete(inp){
 				 	r.push({id:hiddenvalue, value:hiddenlabel});
 			}
 			 
+			
 			 fn(r);
 		  }});
-		},
+			  
+		};
+		
+	
+	var source = eval($(inp).attr("source")) || fnsource;
+	
+	var _inp = $(inp).next();
+	
+	$(inp).autocomplete({
+		 minLength: minLength,
+		 source: source,
 		select: function(e,ui){
 		  var item = ui.item;
 		  $(_inp).val(eval('item.'+value));
@@ -65,10 +75,7 @@ function enable_autocomplete(inp){
 		  
 		},
 		response: function(e, ui){
-			/*var items = ui.content;
-			if ( items.length == 0 ){
-				items = [{label:'Agregar Paciente', value:'-1'}];
-			}*/
+			
 		}
 	 });	
 }

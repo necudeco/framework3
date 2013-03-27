@@ -22,7 +22,7 @@ function getData(params, fsuccess, ferror){
 	
 		},
                 dataFilter: function(data, type){ //console.log(data);
-                    if ( type == 'json'){
+                    if ( type == 'json'){                    	
                         var str = data;
                         str=str.replace(/\\'/g,'\'');
                         str=str.replace(/\\"/g,'"');    
@@ -31,7 +31,6 @@ function getData(params, fsuccess, ferror){
                         return str;
                     }
                     return data;
-
                 },
 		success: function(response){ //console.log(response);
 //			console.log(response, typeof(response));

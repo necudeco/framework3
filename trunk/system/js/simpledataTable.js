@@ -157,6 +157,7 @@ $sdt.fn.extend({
 	 $(this).parent().children().removeClass("activate");
 	 $(this).addClass("activate");
 		
+		
 	 var offset = ( page - 1 ) * 10;
 	 $(obj).attr("data-offset",offset);
 

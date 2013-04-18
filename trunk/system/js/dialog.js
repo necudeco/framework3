@@ -1,5 +1,7 @@
 	dialog = function(obj)
 	{
+		if ( ! $(obj).hasClass("dialog") ) return false;
+		
 		var title = '';
 		title = $(obj).attr("title");
 		if ( title == undefined ) title = '';		
@@ -7,6 +9,15 @@
 		resizable = ( resizable == 'true' )?true:false;
 		var width = 'auto';
 		if ( $(obj).attr("width") != undefined ) width = $(obj).attr("width");
+		
+		
+		// Primer Skin : PANEL
+		if ( $(obj).hasClass("panel") ) {
+		
+			//$(obj).dialog({});
+		
+			return true;
+		}
 		
 		$(obj).dialog(
 		{

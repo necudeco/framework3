@@ -1,3 +1,91 @@
+(function($){
+	$.dialog = function(element, options){
+		this.options = {};
+
+		element.data('dialog', this);
+
+		this.init = function(element, options){
+			this.options = $.extend({}, $.dialog.defaultOptions, options);
+			
+
+		}
+
+
+		this.init(element,options)
+
+	};
+
+	$.fn.dialog = function(options){
+		return this.each(function(){
+			(new $.dialog($(this), options));
+		});
+
+	};
+
+	$.dialog.defaultOptions = {
+
+	};
+	
+
+
+})(jQuery);
+
+$(document).ready(function(){
+	$(".dialog").dialog();
+});
+
+/*
+$(document).ready(function(){
+
+
+$.fn.dialog = function(param){
+	
+	var dlg = this;
+
+	dlg.init = function(){
+
+	}
+
+	dlg.open_panel = function(){
+
+	}
+
+	function open_dialog(){
+		$(dlg).css("z-index",9999);
+		$(dlg).css("position","absolute");
+		$(dlg).css("background-color","white");
+		$(dlg).css("top","20px");
+		$(dlg).show();	
+	}
+
+	if ( param == 'open' ){
+		if ( $(dlg).hasClass("panel") ){
+			return open_panel();
+		}
+
+		return open_dialog();
+	}
+
+	if ( param == 'close' ){
+		$(dlg).css("z-index","");
+		$(dlg).css("position","absolute");
+		$(dlg).css("background-color","white");
+		$(dlg).hide();	
+	}	
+
+	
+};
+
+});
+
+
+function dialog(dlg){
+	$(dlg).dialog();
+}
+
+*/
+
+/*
 	dialog = function(obj)
 	{
 		if ( ! $(obj).hasClass("dialog") ) return false;
@@ -10,14 +98,6 @@
 		var width = 'auto';
 		if ( $(obj).attr("width") != undefined ) width = $(obj).attr("width");
 		
-		
-		// Primer Skin : PANEL
-		if ( $(obj).hasClass("panel") ) {
-		
-			//$(obj).dialog({});
-		
-			return true;
-		}
 		
 		$(obj).dialog(
 		{
@@ -130,6 +210,14 @@
 
 $(document).ready(function(){
 
+	$.fn.old_dialog = $.fn.dialog;
+	console.log($.fn.old_dialog);
+
+	$.fn.extend(true,$.fn.dialog, { dialog:  function(p){
+		alert("Nuevo Dialog");
+	}} );
+
+
 	$("div.dialog").each(function()
 	{
 		dialog(this);
@@ -156,3 +244,4 @@ $(document).ready(function(){
 	});
 
 });
+*/

@@ -122,13 +122,6 @@
 
 $(document).ready(function(){
 
-	$.fn.old_dialog = $.fn.dialog;
-	console.log($.fn.old_dialog);
-
-	$.fn.extend(true,$.fn.dialog, { dialog:  function(p){
-		alert("Nuevo Dialog");
-	}} );
-
 
 	$("div.dialog").each(function()
 	{

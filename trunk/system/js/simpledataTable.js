@@ -92,7 +92,7 @@ $sdt.fn.extend({
   
   pagination: function(c, tfoot){
 	  if ( tfoot == undefined ) return false;
-	
+
 		var obj = this;
 
 		var page = Math.floor( obj.offset / obj.limit ) +1;
@@ -108,12 +108,15 @@ $sdt.fn.extend({
 	
 		$(td).css("text-align","right");
 				
-		if ( npages > 10 ){
+		if ( npages > 5 ){
 			var sel = document.createElement("select");
-
+			$(sel).bind('change', function(){ 
+				
+				this.options[this.selectedIndex].click(); 
+			});
 			for( var i = 1; i <= npages; i++){
 				var a = document.createElement("option");
-				$(a).val(i)
+				$(a).val(i);
 				$(a).text(i);
 				$(a).bind('click', this.changePage);
 				if ( page == i ) $(a).attr("selected","selected");
@@ -146,7 +149,11 @@ $sdt.fn.extend({
   changePage: function(e){
 
 	e.preventDefault();
-	var obj = $(this).parents("table.dataTable").eq(0);
+	
+	var obj = $(this).parents("table.dataTable").get(0);
+	
+	var limit = $(obj).attr("data-limit") || 10;
+	
 	var page = $(this).text();
 	
 	 $(obj).data("Page",page);	 
@@ -158,7 +165,7 @@ $sdt.fn.extend({
 	 $(this).addClass("activate");
 		
 		
-	 var offset = ( page - 1 ) * 10;
+	 var offset = ( page - 1 ) * limit;
 	 $(obj).attr("data-offset",offset);
 
 	 $(obj).dataTable("loadData");

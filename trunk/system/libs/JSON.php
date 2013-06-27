@@ -52,7 +52,7 @@ function jsonEncode($obj)
 		foreach( $obj as $k => $i)
 		{
 			$i = jsonEncode($i);
-	           	$response[$j] = "\"$k\":$i";
+	      $response[$j] = "\"$k\":$i";
 			
 			if ( is_numeric($k) && $j == intval($k) )
 			{

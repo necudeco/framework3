@@ -1,13 +1,20 @@
 <?php
 
-require_once('app/config.php');
+	include_once("system/libs/debug.php");
+	
+	global $config;
+	
+	$config = array();
+
+include_once("system/config.php");
+include_once('app/config.php');
 
 $domain = $_SERVER['HTTP_HOST'];
-if ( file_exists("app/config.$domain.php") ){
-	require("app/config.$domain.php");
-}
+@include("app/config.$domain.php");
 
-global $config;
+
+
+
 
 function autoloadModels($className){
 	$fileName = strtolower($className);
@@ -26,12 +33,14 @@ function autoloadModels($className){
 
 spl_autoload_register('autoloadModels', true);
 
-include_once("system/libs/debug.php");
+
 include_once("system/smarty/SmartyML.class.php");
 include_once("system/controller/ControllerBase.php");
 include_once("system/phpORM/ORMBase.php");
 
+error_reporting($config['error']);
 
+/*
 $error = "stdout";
 if ( array_key_exists('error',$config) ){
 	$error = $config['error'];
@@ -42,6 +51,8 @@ ini_set('html_errors',"On");
 
 ini_set('error_prepend_string','<div class="php_error" style="padding: 0 20px 20px;  border: 1px #FF00CC dotted;">');
 ini_set('error_append_string','</div >');
+
+*/
 
 class App{
 
@@ -62,7 +73,7 @@ class App{
 		//$config['lang'] = 'en';
 		$smarty = new SmartyML($config['lang']);
 		$smarty->allow_php_tag = true;
-		$smarty->error_reporting = 2;
+		$smarty->error_reporting = $config['error'];
 		$smarty->compile_dir = "cache";
 		$smarty->template_dir = "app/views";
 		
@@ -113,10 +124,36 @@ class App{
 
 		$_REQUEST = array_merge($_GET,$_POST);
 	
-		$params = @$_SERVER['PATH_INFO'];
+	
+		
+		$baseURL = explode("/",$config['baseURL']);
+		unset($baseURL[count($baseURL) -1 ]);
+		unset($baseURL[0]);
+		unset($baseURL[1]);
+		unset($baseURL[2]);
+		
+	
+	
+	
+		$params = @$_SERVER['REQUEST_URI'];
+		$params = explode("?", $params);
+		$params = $params[0];
 		$params = explode("/",$params);
 		if ( @$params[0] == "" ) array_shift($params);
 
+		foreach( $baseURL as $i=>$l){
+			foreach( $params as $j=>$p ){
+				if ( $l == $p ){
+					unset($baseURL[$i]);
+					unset($params[$j]);
+				}
+			}
+		}
+		
+		$params = array_values($params);
+		
+	
+		
 		$response['params'] = $params;
 
 

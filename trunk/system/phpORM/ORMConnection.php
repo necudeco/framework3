@@ -11,6 +11,7 @@ require_once("pdo/pdo.php");
 class ORMConnection{
 
 	public static $debug = false;
+	private static $conn = null;
 
 	public static function getConnectionParamaters(){
 		global $config;
@@ -22,23 +23,26 @@ class ORMConnection{
 	}
 
 	public static function getConnection(){
-			$config_db = ORMConnection::getConnectionParamaters(); 
+	
+			if ( ORMConnection::$conn == null ){
+				$config_db = ORMConnection::getConnectionParamaters(); 
 
-			$conn = ORMPDO::create("mysql");  
-			$conn->connect($config_db);
+				ORMConnection::$conn = ORMPDO::create("mysql");  
+				ORMConnection::$conn->connect($config_db);
 
-			if ( $conn == null)
-			{
-				throw new ORMConnectionError("Error de Conexion");
+				if ( ORMConnection::$conn == null)
+				{
+					throw new ORMConnectionError("Error de Conexion");
+				}
+				
+				if ( $config_db['driver'] == 'mysqli' && @$config_db['charset'] != '' )
+					ORMConnection::$conn->Execute("SET NAMES ".$config_db["charset"]);
+					
+				//$conn->SetFetchMode(ADODB_FETCH_ASSOC);	
 			}
-			
-			if ( $config_db['driver'] == 'mysqli' && @$config_db['charset'] != '' )
-				$conn->Execute("SET NAMES ".$config_db["charset"]);
-				
-			//$conn->SetFetchMode(ADODB_FETCH_ASSOC);	
-			$conn->debug = ORMConnection::$debug;
-				
-			return $conn;  
+			ORMConnection::$conn->debug = ORMConnection::$debug;
+			//debug($conn);
+			return ORMConnection::$conn;  
 	}
 	
 	

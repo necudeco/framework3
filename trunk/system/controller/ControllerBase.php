@@ -15,6 +15,7 @@ include_once("system/libs/FException.php");
 include_once("system/controller/RouteBase.php");
 
 
+
 abstract class ControllerBase
 {
 
@@ -60,8 +61,16 @@ abstract class ControllerBase
 	protected function getParameter() { return array_shift($this->args["params"]); }
 
 
-	public function callMethod($method,$caller='Action')
+	public function callMethod($method,$responser='Action')
 	{	
+		@include("system/controller/${responser}Response.php");
+		
+		$className = $responser."Response";
+		$r = new $className($this);
+		
+		return $r->Run($method);
+		
+		/*
 		if ( array_key_exists('__debug',$_REQUEST) )
 		{
 			if ( class_exists("ORMBase")  )
@@ -76,11 +85,11 @@ abstract class ControllerBase
 			}catch(Exception $e)
 			{
 				global $smarty;
-				$err = $caller."Error";
+				$err = $reponser."Error";
 
 				$this->$err($e);
 			}
-		
+		*/
 	}
 
 	private function ActionError($e)
@@ -125,6 +134,7 @@ abstract class ControllerBase
 	
 	public function ActionRun($actionName)
 	{
+		header('Content-Type: text/html; charset=utf-8');
 		error_reporting($this->error_level);
 	
 		$response = $this->callMethod($actionName);
@@ -158,7 +168,7 @@ abstract class ControllerBase
 
 			
 
-			die(jsonEncode($response));
+			die(json_encode($response));
 		}
 		catch(Exception $e){
 			$this->JsonError($e);

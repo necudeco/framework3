@@ -20,7 +20,7 @@ class JsonResponse extends Response{
 			}catch(Exception $e)
 			{
 				
-				$this->$err($e);
+				$this->error($e);
 			}		
 	}
 	

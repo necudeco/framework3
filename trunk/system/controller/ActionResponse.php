@@ -18,7 +18,7 @@ class ActionResponse extends Response{
 				return $this->obj->$method();	
 			}catch(Exception $e)
 			{
-				$this->$err($e);
+				$this->error($e);
 			}		
 	}
 	

@@ -14,8 +14,6 @@ $domain = $_SERVER['HTTP_HOST'];
 
 
 
-
-
 function autoloadModels($className){
 	$fileName = strtolower($className);
 	$pathName = "app/models/$fileName.php";
@@ -131,25 +129,21 @@ class App{
 		unset($baseURL[0]);
 		unset($baseURL[1]);
 		unset($baseURL[2]);
-		
 	
 	
-	
-		$params = @$_SERVER['REQUEST_URI'];
+		$params = @$_SERVER['REQUEST_URI'];  
 		$params = explode("?", $params);
-		$params = $params[0];
-		$params = explode("/",$params);
+		$params = $params[0];  
+		$params = explode("/",$params); 
 		if ( @$params[0] == "" ) array_shift($params);
 
+
+
 		foreach( $baseURL as $i=>$l){
-			foreach( $params as $j=>$p ){
-				if ( $l == $p ){
-					unset($baseURL[$i]);
-					unset($params[$j]);
-				}
-			}
+			//unset($params[$i]);
+			array_shift($params);
 		}
-		
+	
 		$params = array_values($params);
 		
 	

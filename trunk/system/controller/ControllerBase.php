@@ -49,7 +49,7 @@ abstract class ControllerBase
 		
 		$this->init();
 		
-		
+
 	}
 
 	protected function init()

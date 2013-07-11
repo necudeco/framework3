@@ -34,12 +34,13 @@ class qqUploadedFileXhr {
     function getName() {
         return $_GET['qqfile'];
     }
-    function getSize() {		
-        if (isset($_SERVER["CONTENT_LENGTH"])){
+    function getSize() {
+    	   	
+      if (isset($_SERVER["CONTENT_LENGTH"])){
             return (int)$_SERVER["CONTENT_LENGTH"];            
-        } else {
-            throw new Exception('Getting content length is not supported.');
-        }      
+       } else {
+       		throw new Exception('Getting content length is not supported.');
+       }      
     }   
 }
 

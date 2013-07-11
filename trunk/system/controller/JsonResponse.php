@@ -16,7 +16,19 @@ class JsonResponse extends Response{
 		
 		try{
 				$r =  $this->obj->$method();	
-				return $r;
+				
+
+				$response['code'] = 'OK';
+				$response['response'] = array();//$aux;
+				
+				if ( is_array($r) &&  isset($r['count'] )){
+					$response['response'] = $r;
+				}else{
+					$response['response']['count'] = count($r);
+					$response['response']['data'] = $r;
+				}
+				die(jsonEncode($response));
+				
 			}catch(Exception $e)
 			{
 				

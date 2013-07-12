@@ -29,14 +29,14 @@ function autoloadModels($className){
 	return false;
 }
 
-spl_autoload_register('autoloadModels', true);
+	spl_autoload_register('autoloadModels', true);
 
 
-include_once("system/smarty/SmartyML.class.php");
-include_once("system/controller/ControllerBase.php");
-include_once("system/phpORM/ORMBase.php");
+	include_once("system/smarty/SmartyML.class.php");
+	include_once("system/controller/ControllerBase.php");
+	include_once("system/phpORM/ORMBase.php");
 
-error_reporting($config['error']);
+	error_reporting($config['error']);
 
 /*
 $error = "stdout";

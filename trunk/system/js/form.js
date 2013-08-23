@@ -148,33 +148,23 @@ $(document).ready(function(){
 	 * action: indica la URL donde se procesa la carga de archivos
 	 * title: el texto que se carga en el boton de subir
 	 */
-	$(".fileuploader").each(function(){  //console.log(this);
-		var fu = this;
+//	$(".fileuploader").each(function(){  //console.log(this);
+		
+	document.fileuploader = function(fu){		
+//		var fu = this;
+		if ( fu == undefined ) return false;
 		var inputname = $(fu).attr("input") || 'file';
 		var limit = $(fu).attr("limit");
 		var action = $(fu).attr("action");
 		var button = $(fu).attr("button");
 		var backgroundcolor = $(fu).attr("background-color") || "#800";
 		
-		if ( action == undefined ) throw "Not defined action URL at fileuploader "+$(fu).attr("id");
+		if ( action == undefined ) {
+			
+			throw "Not defined action URL at fileuploader "+$(fu).attr("id");
+		}
 		
-		var divUploadList = document.createElement("div");
-		$(divUploadList).addClass("uploadList");
-		$(divUploadList).addClass("dinamic");
-
-		if ( $(fu).hasClass("thumbnail") ) $(divUploadList).addClass("thumbnail");
 		
-		var dlgWait = document.createElement("div");
-		$(dlgWait).addClass("dialog")
-					.append('<p style="width: 300px;">Espere un momento por favor ...</p>')
-					.attr("id","dlgWait");
-						
-		
-									
-		$("div#dlgWait").remove();
-		$(document).append(dlgWait);
-		dialog(dlgWait);
-		$(dlgWait).parent().find(".ui-dialog-titlebar").hide();
 		
 		new qq.FileUploaderBasic({
                 element: fu,
@@ -184,43 +174,29 @@ $(document).ready(function(){
                 buttonTitle: button,
                 inputName: inputname,
                 onSubmit: function(id, filename){
-                	var lis = $(divUploadList).find(">div");
                 	
-                	if ( limit != undefined && $(lis).length >= limit ){
-                		$(fu).trigger("error", {codeError:'LIMITEXPECTED'});
-                		return false;
-                	}
-                	$(fu).trigger("progress","");  //trigger agregado 08/03/2013
-//                 	if ( typeof($.blockUI) == 'function' ) $.blockUI();
-							$(dlgWait).dialog('open');
+                	$(fu).trigger("progress","");  //trigger agregado 08/03/2013 //DEPRECATED
+                	$(fu).trigger("onSubmit",{element:fu});
+
                 },
                 onComplete: function(id, filename, response){
-                	
-//						var li = $(fu).find(".qq-upload-list li:last");//.eq(id);
-						$(dlgWait).dialog('close');
+                		
+//						
 						if ( response.success == false ) {
 							msgBox(response.errormessage);
 							return false;
-						}/*
-						var fn = $(fu).data("addFile");
-						var div = fn(response);*/
-// 						if ( typeof($.unblockUI) == 'function' ) $.unblockUI();
-						
+						}
+												
 						$(fu).trigger('itemLoaded',{element:fu, response: response.response.data});					
 				}
 			});
-		
-		$(fu).find(".qq-upload-button").css("background-color",backgroundcolor);
-		$(fu).find(".qq-upload-list").remove();
-		$(fu).find(".qq-uploader").append(divUploadList);
-		
-		
-	});
 	
-	$(".fileuploader .qq-upload-delete").live('click',function(e){
-		e.preventDefault();
-		var li = $(this).parents("li").eq(0).remove();
-	});
+	}
+	//});
+	
+	
+	$(".fileuploader").each(function(){  document.fileuploader(this);  });
+	
 	
 	if ( typeof(CKEDITOR)  == 'object' ){
 			$("form textarea.rich").each(function(){

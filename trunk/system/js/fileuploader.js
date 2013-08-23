@@ -875,7 +875,7 @@ qq.UploadHandlerAbstract = function(o){
 };
 qq.UploadHandlerAbstract.prototype = {
     log: function(str){
-        if (this._options.debug && window.console) console.log('[uploader] ' + str);        
+        if (this._options.debug && window.console) /*console.log('[uploader] ' + str)*/;        
     },
     /**
      * Adds file or file input to the queue

@@ -31,9 +31,8 @@ abstract class ControllerBase
 	protected $autoRoute = false;
 	
 	public static $debug = true;
-	protected $display = null;
 	
-	protected $error_level = E_ALL;
+	
 	
 	public function __construct(&$args)
 	{
@@ -60,184 +59,18 @@ abstract class ControllerBase
 
 	protected function getParameter() { return array_shift($this->args["params"]); }
 
-
 	public function callMethod($method,$responser='Action')
 	{	
-		@include("system/controller/${responser}Response.php");
+
+		include("system/controller/${responser}Response.php");
 		
 		$className = $responser."Response";
 		$r = new $className($this);
-		
+
 		return $r->Run($method);
-		
-		/*
-		if ( array_key_exists('__debug',$_REQUEST) )
-		{
-			if ( class_exists("ORMBase")  )
-			{
-				ORMConnection::debug(true);
-				unset($_REQUEST['__debug']);
-			}
-		} 
-		
-		try{
-				return $this->$method();	
-			}catch(Exception $e)
-			{
-				global $smarty;
-				$err = $reponser."Error";
-
-				$this->$err($e);
-			}
-		*/
 	}
 
-	private function ActionError($e)
-	{
-		global $smarty;
-		$smarty->clearAllAssign();
-		$smarty->assign('error',$e);
-		die($smarty->fetch('error.html'));		
-	}
-	
-	private function JsonError($e)
-	{
-		global $smarty;
-		
-		$response = array();
-		$response['code'] = "ERROR";
-			
-//		$smarty->assign('nroerror',$e->getCode());
-			
-		$response['message'] = $e->getMessage();//$smarty->fetch('error.html');
-		$response['log'] = $e->getCode();
-		if ( get_class($e) == 'FException' )
-			$response['params'] = $e->getParams();
 
-		
-		die(json_encode($response));
-	}
-	
-	private function XmlError($e)
-	{
-		header("Content-type:text/xml");
-
-		$dom = new DOMDocument();
-		$err = $dom->createElement("error");
-		$dom->appendChild($err);
-					
-		$err->setAttribute("code",0);
-		$err->setAttribute("message",$e->getMessage());
-					
-		die($dom->saveXML());
-	}
-	
-	public function ActionRun($actionName)
-	{
-		header('Content-Type: text/html; charset=utf-8');
-		error_reporting($this->error_level);
-	
-		$response = $this->callMethod($actionName);
-		if ( $response == false ){
-		  global $smarty;
-		  $smarty->display($this->template);
-		}
-	}
-	
-	public function JsonRun($actionName)
-	{	
-		// No mostrar errores menores que puedan afectar al JSON
-		error_reporting(E_ERROR);
-		/*
-		if ( !isset($_REQUEST['__debug']) )
-			header("Content-type: text/json");
-		*/
-		$response = array();
-		try{
-			$aux = $this->callMethod($actionName,'Json');  
-
-			$response['code'] = 'OK';
-			$response['response'] = array();//$aux;
-			
-			if ( is_array($aux) &&  isset($aux['count'] )){
-				$response['response'] = $aux;
-			}else{
-				$response['response']['count'] = count($aux);
-				$response['response']['data'] = $aux;
-			}
-
-			
-
-			die(json_encode($response));
-		}
-		catch(Exception $e){
-			$this->JsonError($e);
-		}
-		
-		return true;		
-	}
-	
-	private function toXML($rs)
-	{
-    	$dom = new DOMDocument('1.0');
-    
-    	$xreport = $dom->createElement('xml');
-    	$dom->appendChild($xreport);
-
-    	if ( count($rs) > 0 )
-    	{
-    		foreach( $rs as $item )
-    		{
-	        	$xrow = $dom->createElement('row');
-        		foreach( $item as $key => $data)
-        		{
-            		$xcol = $dom->createElement($key);
-
-		            $text = $dom->createTextNode($data);
-    		        $xcol->appendChild($text);
-
-        		    $xrow->appendChild($xcol);
-        		}
-        		$xreport->appendChild($xrow);
-    		}
-    	}
-		return $dom;
-	}
-	
-	
-	public function XmlRun($actionName)
-	{
-			$response = array();
-				try
-				{
-					$aux = $this->callMethod($actionName,'Xml'); 
-					if ( $aux instanceof ORMBase ) $aux = $aux->toXML();
-					if ( $aux instanceof ORMCollection ) $aux = $aux->toXML();
-					if ( !( $aux instanceof DOMDocument ) ) $aux = $this->toXML($aux);
-					
-					
-					header("Content-type:text/xml");
-					die($aux->saveXML());
-					
-				}
-				catch(Exception $e)
-				{
-					header("Content-type:text/xml");
-
-					$dom = new DOMDocument();
-					$err = $dom->createElement("error");
-					$dom->appendChild($err);
-					
-					$err->setAttribute("code",0);
-					$err->setAttribute("message",$e->getMessage());
-					
-					die($dom->saveXML());
-				
-				}
-				return true;		
-	}
-	
-	
 	public function Run()
 	{	
 
@@ -258,22 +91,11 @@ abstract class ControllerBase
 			
 			
 			if ( method_exists($this, $actionName) or method_exists($this,"__call")){
-					$execute = $this->type."Run";
-					return $this->$execute($actionName);
+					
+					return $this->callMethod($actionName, $this->type);
+					
 			}elseif ( $className = Route::getController($this->action, $this->module) ){
-				//$className = $this->route[$this->action];
-			/*	global $path;
-				$filename = strtolower("$className.php");
 
-				$module = $this->module;
-				if ( $module == "" ){
-					global $config;
-					$module = $config['module']['default'];
-				}
-				if ( $module != "" ) $module .="/";
-				require_once("${path}app/controllers/${module}${filename}");
-				
-*/
 				$mod = new $className($this->args);
 				$mod->parent = get_class($this);
 
@@ -537,6 +359,9 @@ abstract class ControllerBase
 	  $this->view->assign("content","TEXTO DE SALIDA");
 	}
 
+	public function display(){
+		$this->view->display($this->template);
+	}
 
 }
 

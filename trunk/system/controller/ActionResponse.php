@@ -15,9 +15,16 @@ class ActionResponse extends Response{
 		} 
 		
 		try{
-				return $this->obj->$method();	
+			
+			$args = ( $this->obj->args['params'] );
+			$response = call_user_func_array(array($this->obj, $method), $args);
+				
+				if ( $response == false ){
+					$this->obj->display();
+				}
+
 			}catch(Exception $e)
-			{
+			{	
 				$this->error($e);
 			}		
 	}

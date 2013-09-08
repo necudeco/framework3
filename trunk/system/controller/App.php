@@ -6,11 +6,11 @@
 	
 	$config = array();
 
-include_once("system/config.php");
-include_once('app/config.php');
+	include_once("system/config.php");
+	include_once('app/config.php');
 
-$domain = $_SERVER['HTTP_HOST'];
-@include("app/config.$domain.php");
+	$domain = $_SERVER['HTTP_HOST'];
+	@include("app/config.$domain.php");
 
 
 
@@ -38,19 +38,7 @@ function autoloadModels($className){
 
 	error_reporting($config['error']);
 
-/*
-$error = "stdout";
-if ( array_key_exists('error',$config) ){
-	$error = $config['error'];
-}
-ini_set('display_errors',$error);
 
-ini_set('html_errors',"On");
-
-ini_set('error_prepend_string','<div class="php_error" style="padding: 0 20px 20px;  border: 1px #FF00CC dotted;">');
-ini_set('error_append_string','</div >');
-
-*/
 
 class App{
 
@@ -63,10 +51,11 @@ class App{
 		$args = App::breakURL();
 
 
-
+	/*
 		if ( ! is_writable("${path}cache") ){
 			throw new Exception("Directorio ${path}cache no Existe o no tiene permisos de escritura");
 		}
+		*/
 		
 		//$config['lang'] = 'en';
 		$smarty = new SmartyML($config['lang']);
@@ -75,7 +64,6 @@ class App{
 		$smarty->compile_dir = "cache";
 		$smarty->template_dir = "app/views";
 		
-		//$smarty->addPluginsDir($config['root']."app". DIRECTORY_SEPARATOR."plugins".DIRECTORY_SEPARATOR );
 		$smarty->addPluginsDir($config['root']."app". DIRECTORY_SEPARATOR."plugins".DIRECTORY_SEPARATOR );
 		
 		$smarty->assign("baseURL",$config['baseURL']);	

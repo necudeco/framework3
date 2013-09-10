@@ -52,7 +52,7 @@ abstract class ControllerBase
 	}
 
 	protected function init()
-	{	
+	{		
 		// Codigo de Inicializacion del Controlador
 		
 	}
@@ -104,7 +104,7 @@ abstract class ControllerBase
 					$execute = $this->type."Run"; 
 					
 					$this->args['params'] = array_merge(array($this->action), $this->args['params']);
-					$this->action = $this->defaultaction;
+					$this->action = $this->defaultaction."Action";
 					return $this->callMethod($this->action, $this->type);
 					
 			}else{
@@ -118,9 +118,7 @@ abstract class ControllerBase
 		return cIndex::__403();
 	}
 
-	public function indexAction(){
-		
-	}
+
 	
 	protected function _404()
 	{

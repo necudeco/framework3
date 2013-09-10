@@ -76,7 +76,7 @@ abstract class ControllerBase
 
 		$this->event = "200";	
 		$this->action = ( ($this->action = array_shift($this->args["params"])) == null ) ? $this->defaultaction: $this->action;
-		$this->type 	= ( isset($_REQUEST['ajax']) )?($_REQUEST['ajax']=='xml')?'xml':'json':'Action';
+		$this->type 	= ( isset($_REQUEST['ajax']) )?($_REQUEST['ajax']=='xml')?'Xml':'Json':'Action';
 		$this->ftype 	= ( isset($_REQUEST['ajax']) )?'Ajax':'Action';
 		
 		$actionName = $this->action.$this->ftype; 

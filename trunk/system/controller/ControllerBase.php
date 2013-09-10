@@ -118,6 +118,9 @@ abstract class ControllerBase
 		return cIndex::__403();
 	}
 
+	public function indexAction(){
+		
+	}
 	
 	protected function _404()
 	{

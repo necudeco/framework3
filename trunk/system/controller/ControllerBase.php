@@ -105,7 +105,8 @@ abstract class ControllerBase
 					
 					$this->args['params'] = array_merge(array($this->action), $this->args['params']);
 					$this->action = $this->defaultaction;
-					return $this->$execute($this->defaultaction."Action");
+					return $this->callMethod($this->action, $this->type);
+					
 			}else{
 					$this->event = "404";	//debug($this);
 					return cIndex::__404();

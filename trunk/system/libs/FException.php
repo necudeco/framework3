@@ -19,4 +19,8 @@ class FException extends Exception{
 
 }
 
+
+class ControllerNotFoundException extends Exception {}
+class ControllerForbiddenException extends Exception {}
+
 ?>

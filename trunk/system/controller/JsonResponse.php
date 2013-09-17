@@ -15,7 +15,14 @@ class JsonResponse extends Response{
 		} 
 		
 		try{
-				$r =  $this->obj->$method();	
+				$args = ( $this->obj->args['params'] );
+				$methodName = $method."Ajax";				
+				
+				if ( ! ACL::access(get_class($this->obj), $method, $this->obj) ) throw new ControllerForbiddenException(); 
+				if ( ! method_exists($this->obj, $methodName) ) throw new ControllerNotFoundException();
+				
+				
+				$r = call_user_func_array(array($this->obj, $methodName), $args);
 				
 
 				$response['code'] = 'OK';
@@ -29,7 +36,9 @@ class JsonResponse extends Response{
 				}
 				die(jsonEncode($response));
 				
-			}catch(Exception $e)
+			}catch(ControllerNotFoundException $e){ throw new ControllerNotFoundException(); }
+			catch(ControllerForbiddenException $e){ throw new ControllerForbiddenException(); }
+			catch(Exception $e)
 			{
 				
 				$this->error($e);

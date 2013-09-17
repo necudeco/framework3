@@ -17,13 +17,24 @@ class ActionResponse extends Response{
 		try{
 			
 			$args = ( $this->obj->args['params'] );
-			$response = call_user_func_array(array($this->obj, $method), $args);
+			$methodName = $method."Action";
+			
+
+			if ( ! ACL::access(get_class($this->obj), $method, $this->obj) ) throw new ControllerForbiddenException();
+
+			if ( ! method_exists($this->obj, $methodName) ) throw new ControllerNotFoundException();
+			
+			 
+			
+			$response = call_user_func_array(array($this->obj, $methodName), $args);
 				
 				if ( $response == false ){
 					$this->obj->display();
 				}
 
-			}catch(Exception $e)
+			}catch(ControllerNotFoundException $e){ throw new ControllerNotFoundException(); }
+			catch(ControllerForbiddenException $e){ throw new ControllerForbiddenException(); }
+			catch(Exception $e)
 			{	
 				$this->error($e);
 			}		

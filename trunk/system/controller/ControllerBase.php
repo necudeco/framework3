@@ -12,6 +12,7 @@ include_once("ACL.php");
 include_once("system/libs/JSON.php");
 include_once("system/libs/FException.php");
 
+
 include_once("system/controller/RouteBase.php");
 
 
@@ -48,7 +49,6 @@ abstract class ControllerBase
 		
 		$this->init();
 		
-
 	}
 
 	protected function init()
@@ -62,7 +62,7 @@ abstract class ControllerBase
 	public function callMethod($method,$responser='Action')
 	{	
 
-		include("system/controller/${responser}Response.php");
+		include_once("system/controller/${responser}Response.php");
 		
 		$className = $responser."Response";
 		$r = new $className($this);
@@ -70,37 +70,91 @@ abstract class ControllerBase
 		return $r->Run($method);
 	}
 
+	private function __run($pass=0){
 
-	public function Run()
-	{	
+///if ($pass=1) debug("Default");
 
 		$this->event = "200";	
-		$this->action = ( ($this->action = array_shift($this->args["params"])) == null ) ? $this->defaultaction: $this->action;
+		$this->action = trim(array_shift($this->args["params"]));
 		$this->type 	= ( isset($_REQUEST['ajax']) )?($_REQUEST['ajax']=='xml')?'Xml':'Json':'Action';
 		$this->ftype 	= ( isset($_REQUEST['ajax']) )?'Ajax':'Action';
 		
+		if ( strlen($this->action) == 0 ) $this->action = $this->defaultaction;
 		$actionName = $this->action.$this->ftype; 
+
 
 		$this->actionName = $actionName;
 
+		try{		
+			return $this->callMethod($this->action, $this->type);
+		} // El sistema puede generar 2 expeciones ( 404, 403 )
+		catch(ControllerNotFoundException $e){
+
+			//Probar el default
+			if ( $pass == 1 ){
+				array_unshift($this->args["params"], $this->defaultaction, $this->action);
+				return $this->__run(2);
+			}
+			
+			//Probar otro controller
+			if ( $pass == 0 ){
+				$className = "";
+				array_unshift($this->args["params"], $this->action);
+				$this->action = array_shift($this->args["params"]);
+ 
+				if ( $className = Route::getController($this->action, $this->module) ){
+
+				$mod = new $className($this->args);
+				$mod->parent = get_class($this);
+
+				return $mod->__run(1);
+				} 
+
+			}
+			
+			CIndex::__404();
+		}catch(ControllerForbiddenException $e){
+			CIndex::__403();
+		}
+		
+	}
+
+	public function Run()
+	{	
+/*
+		$this->event = "200";	
+		$this->action = array_shift($this->args["params"]);
+		$this->type 	= ( isset($_REQUEST['ajax']) )?($_REQUEST['ajax']=='xml')?'Xml':'Json':'Action';*/
+		//$this->ftype 	= ( isset($_REQUEST['ajax']) )?'Ajax':'Action';
+		
+		//$actionName = $this->action.$this->ftype; 
+
+		//$this->actionName = $actionName;
+
+		return $this->__run(0);
+		
+		
+/*
 		if ( ! ACL::access(get_class($this), $this->action, $this) ) {
 			$this->event = "403";
 		}else{
 			$this->event = "200";
 			
 			
-			
+			//Metodo existe en esta clase
 			if ( method_exists($this, $actionName) or method_exists($this,"__call")){
 					
 					return $this->callMethod($actionName, $this->type);
 					
-			}elseif ( $className = Route::getController($this->action, $this->module) ){
+			} // Se pasa el control a otra clase
+			elseif ( $className = Route::getController($this->action, $this->module) ){
 
 				$mod = new $className($this->args);
 				$mod->parent = get_class($this);
 
 				return $mod->Run();
-			}elseif ($this->defaultaction != "") {  
+			} // Metodo no Existe y se busca el defaultaction
+			elseif ($this->defaultaction != "") {  
 					$execute = $this->type."Run"; 
 					
 					$this->args['params'] = array_merge(array($this->action), $this->args['params']);
@@ -115,7 +169,7 @@ abstract class ControllerBase
 
 			return cIndex::__404();
 		}
-		return cIndex::__403();
+		return cIndex::__403();*/
 	}
 
 

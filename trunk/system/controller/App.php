@@ -72,7 +72,10 @@ class App{
 		if ( count($args['params']) > 0 ){
 			$modulo = $args['params'][0];
 			unset($args['params'][0]);
+		}else{
+			$modulo = $config['modules']['default'];
 		}
+		
 		try{
 			
 			$cindex_filename = "${path}app/controllers/${modulo}/cindex.php";

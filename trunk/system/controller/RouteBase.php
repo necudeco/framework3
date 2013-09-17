@@ -8,7 +8,7 @@ class RouteBase {
 
 	public static function getController($url_alias, $module){
 	
-		
+
 		global $config;
 		$url_alias = strtolower($url_alias);					
 	

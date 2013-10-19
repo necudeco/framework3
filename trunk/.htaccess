@@ -1,0 +1,28 @@
+<IfModule mod_rewrite.c>
+   RewriteEngine on  
+
+   RewriteRule		^files/js/libs/(.*)$		system/js/$1 [QSA,L]
+   RewriteRule		^files/css/libs/(.*)$	system/css/$1 [QSA,L]
+   
+   
+	RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_FILENAME} !-f
+
+
+	
+#	RewriteRule ^public/index$  index.php/public/ [QSA,L]
+#	RewriteRule ^public/$  index.php/public/ [QSA,L]
+#	RewriteRule ^public/logout$  index.php/public/logout [QSA,L]
+#	RewriteRule ^public/save_contact$  index.php/public/save_contact [QSA,L]
+#	RewriteRule ^public/search$  index.php/public/search [QSA,L]
+#	RewriteRule ^public/comment/(.*)$  index.php/public/comment/$1 [QSA,L]
+#	RewriteRule ^public/node/(.*)$  index.php/public/node/$1 [QSA,L]
+#	RewriteRule ^public/(.*)$  index.php/public/node/$1 [QSA,L]
+	
+#	RewriteCond %{REQUEST_FILENAME} !-d
+#    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteRule ^(.*)$ index.php/$1 [QSA,L]
+	    
+   
+
+</IfModule>

@@ -41,9 +41,25 @@ class ActionResponse extends Response{
 	}
 	
 	public function error($e){
+		global $config;
 		$this->obj->view->clearAllAssign();
 		$this->obj->view->assign('error',$e);
-		die($this->obj->view->fetch('error.html'));	
+		
+		$infotrace = $e->getTrace();
+		$this->obj->view->assign('traces',array_reverse($infotrace));
+		$this->obj->view->assign('errormessage',$e->getMessage());		
+
+		if ( file_exists("app/views/error.html") ){
+			die($this->obj->view->fetch('error.html'));	
+		}else{			
+			$path= $config['root'];				
+			$urlicono = $config['baseURL']."system/css/images/error.png";			
+			$this->obj->view->assign('icono',$urlicono);				
+			die($this->obj->view->fetch("file:".$path."system/error.html"));	
+		}
+
+
+		
 	}
 	
 }

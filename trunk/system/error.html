@@ -1,0 +1,70 @@
+
+<style type="text/css">
+	.error{
+		width: 100%;		
+		text-align: center;
+	}
+	.cabezera{
+		width: 100%;
+		background-color:#f57900;
+		height: 70px;
+		line-height: 70px;
+		padding: 10px 0px;
+		border-color: #000000
+	}
+	.icono{
+		width: 32px;
+		float:left;
+		margin-left: 50px;
+		margin-top: 17px;
+		display: block;
+	}
+	.titulo{
+		float:left;
+		margin-left: 15px; 
+		font-size: 18px;
+		font-weight: bold;
+	}
+	.contenido{
+		width: 100%;
+		background-color:#eeeeec;
+		padding: 10px 0px;
+		border-color: #000000;
+	}
+	.item{
+		width: 100%;
+		height: 40px;
+		line-height: 40px;
+	}
+
+	.name{
+		float:left;
+		width: 30%;
+		font-weight: bold;
+	}
+	.info{
+		float:left;
+		width: 70%;
+	}
+
+</style>
+
+<div class="error">
+	<div class="cabezera">
+		<img src="{$icono}" class="icono" />	
+		<label class="titulo">ERROR</label>
+	</div>
+	<div class="contenido">
+		<div class="item">
+			<div class="name">Archivo:</div>
+			<div class="info">{$file} : linea {$linea}</div>
+		</div>				
+		<div class="item">
+			<div class="name">Mensaje</div>
+			<div class="info">{$errormessage}</div>
+		</div>
+
+			
+	</div>
+</div>
+

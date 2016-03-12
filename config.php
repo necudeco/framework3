@@ -1,7 +1,6 @@
 <?php
 	global $config;
 	
-
 	date_default_timezone_set("America/Lima");
 	
 	$config['modules']['default'] = 'public';

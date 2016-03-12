@@ -30,7 +30,14 @@ class RouteBase {
 			
 		}
 	
-		if ( $fullPath === false ) return false;
+		
+		
+		if ( $fullPath === false ) {
+			//die("NO HAY");
+			return false;
+		}else{
+			//die("SI HAY");
+		}
 		
 		require_once($fullPath);
 		

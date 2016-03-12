@@ -71,7 +71,7 @@ abstract class ControllerBase
 	}
 
 	private function __run($pass=0){
-
+		
 ///if ($pass=1) debug("Default");
 
 		$this->event = "200";	
@@ -97,7 +97,7 @@ abstract class ControllerBase
 			}
 			
 			//Probar otro controller
-			if ( $pass == 0 ){
+			if ( $pass == 0 ){ 
 				$className = "";
 				array_unshift($this->args["params"], $this->action);
 				$this->action = array_shift($this->args["params"]);

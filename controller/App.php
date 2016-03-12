@@ -76,7 +76,7 @@ class App{
 			$modulo = $config['modules']['default'];
 		}
 		
-		try{
+		try{ 
 			
 			$cindex_filename = "${path}app/controllers/${modulo}/cindex.php";
 			 
@@ -86,7 +86,7 @@ class App{
 				$modulo = $config['modules']['default'];
 				$cindex_filename = "${path}app/controllers/${modulo}/cindex.php";
 				if (! file_exists($cindex_filename)){
-					throw new FException("NOT_MODULE");
+					throw new FException("NOT_CONTROLLER $cindex_filename");
 				}	 
 				
 			}else{

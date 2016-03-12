@@ -1,0 +1,329 @@
+framework3
+
+framework3 es un PHP framework, construido por desarrolladores de la Empresa Clever Clouds, quienes con la necesidad de construir aplicaciones web livianas y con una lógica de estructura simple para el acceso a sus librerías. framework3 esta basado en el modelo MVC y cuenta con un ORM muy potente. Actualmente framework3 se encuentra en su Versión 0.1 y está lista para trabajar con proyectos para el desarrollo de aplicaciones web en PHP.
+
+Tabla de Contenidos
+
+#Informacion_Basica
+
+#Requerimientos
+#Acuerdos_de_Licencia
+#Creditos
+#Instalacion
+
+#Descargar_framework3
+#Instrucciones_de_Instalacion
+#Topicos_Generales
+
+#Controllers
+#Models
+#Views
+#Palabras_Reservadas
+#Librerias
+#JavaScripts_Personalizados
+#Manejo_Errores
+Informacion Basica
+
+Requerimientos
+
+PHP version 5.3 a la más reciente. Es requerido una base de datos para programar aplicaciones web, soporta base de datos como MYSQL 5 a la más reciente.
+
+Acuerdos de Licencia
+
+framework3.
+
+Creditos
+
+framework3.
+
+Instalacion
+
+Descargar framework3
+
+Actualmente framework3 se encuentra en su versión 0.1 y está listo para ser descargado desde el siguiente enlace
+
+Instrucciones de Instalacion
+
+framework3 se puede instalar y configurar para su uso en las aplicaciones mediante los siguientes pasos: 1. Descomprimir el paquete 1. Abrir el archivo app/config.php con algún editor de texto y colocar el nombre de tu dirección URL. Por Ejemplo : ```
+
+       $config['modules']['default'] = 'public';
+
+       $config['baseURL'] = 'http://www.mydomain.com/';
+
+       $config['database'] = array(
+                 'server' => 'localhost',
+                     'database' => 'mydatabase',
+                 'user' => 'myuser',
+                 'password' => 'mypassword',
+                 'driver'=>'mysqli',
+                 'charset' => 'utf8'
+                   ); 
+
+       $config['baseURL'] = 'http://localhost/almacen/';
+
+       $config['root']="c:/wamp/www/almacen/"; 
+  ?>
+```
+
+A continuación se puede apreciar lo mínimo que debe contener el archivo de configuración para el funcionamiento correcto de las aplicaciones. En este también se pueden definir variables auxiliares dentro del config.
+
+La sentencia $config['modules']['default'] = 'public'; sirve para indicar el módulo por defecto en la aplicación.
+
+La sentencia $config['baseURL'] sirve para indicar el nombre del dominio de la aplicación.
+
+La sentencia $config['root'] sirve para indicar la ruta en donde se subirán los archivos.
+
+Es necesario configurar el app/config.php (vea el item 2) para poder hacer uso de base de datos
+Topicos Generales
+
+Controllers
+
+Los controladores son el corazón de la aplicación en ellos se invocan a los modelos y se hacen las llamadas a las vistas. Un controlador es simplemente una clase que puede estar asociado con una URL. Considere el siguiente ejemplo: http://localhost/proyecto/empresa
+
+A continuación se puede observar un pequeño ejemplo de como crear un controlador en framework3, siguiendo el ejemplo anterior: <?php include_once("route.php"); class cEjemplo extends ControllerBase{ 
+public function indexAction(){ } 
+} ?> Note: Los nombres de las clases deben empezar con el prefijo "c", así como se vio en el ejemplo anterior.
+
+Este archivo se debe de grabar dentro de la carpeta app/controllers, ahora esto se puede utilizar mediante la siguiente dirección http://localhost/proyecto/ejemplo
+
+En el controlador index siempre se debe incluir el archivo route.php, este archivo contendrá lo siguiente: ```
+
+    }
+
+?>
+```
+
+Dentro de los controladores hay formas para indicar el comportamiento de funciones definidas en él de acuerdo a nuestras necesidades, es así que por ejemplo nosotros podemos crear una función de esta manera: public function mifuncionAjax(){ } La sentencia anterior muestra una función para uso de invocaciones ajax éstas generalmente devuelven un array de datos que fueron invocados en una vista en particular, cabe resaltar que las terminaciones de los nombres de estas funciones tienen que ser en "Ajax". Si es que nosotros deseamos definir funciones que invocan sólo a vistas tenemos que hacerlo de la siguiente manera: public function mivistaAction(){ 
+} La sentencia anterior muestra una función para uso de invocaciones a vistas éstas hacen referencia a páginas HTML en sí y como las funciones de invocaciones a Ajax éstas deben terminar en "Action".
+
+Models
+
+Los Modelos con clases PHP, que cuya función esta destinada al trabajo con la información de tu base de datos y dentro del framework se ubican en "app/models". * Anatomía de una clase: class Cliente extends ORMBase{ protected $tablename = 'cliente'; } En esta sentencia se esta apreciando el "como se crea un modelo", como se aprecia aquí se debe de especificar el nombre de la tabla hacia donde hace referencia mediante la variable "tablename".
+
+Cargando un Model protected $model = "Cliente";
+
+Esta sentencia de código debe de estar en el controlador que desee utilizar al modelo que para el ejemplo es "Cliente". En esta sentencia se ha establecido como modelo por defecto a "Cliente" (solo se puede establecer a uno sólo).
+
+Usando el ORM en el Modelo para el acceso a la Base de Datos
+
+El acceso a la base de datos mediante el framework3 se realiza mediante un ORM "phpORM" desarrollado por el mismo framework, y su uso se detallará más adelante.
+
+Conexión a una base de datos.
+
+Dentro del archivo "app/config.php" se puede establecer la configuración necesaria para cuando se desee utilizar a una base de datos, dentro de este archivo también se pueden configurar algunas otros opciones que se especifican en otros apartados. A continuación se muestra <?php $config['database'] = array( 'server' => 'localhost', 'database' => 'mydatabase', 'user' => 'myuser', 'password' => 'mypassword', 'driver'=>'mysqli', 'charset' => 'utf8' ); ?> 
+
+Views
+
+Una vista es una página web simple o un fragmento de una página como una cabecera, un pie de página, etc. Las vistas nunca se pueden invocar sólas, éstas siempre se invocan através de los controllers. A continuación se presenta un ejemplo:
+
+Creando una vista ``` Hola Mundo
+
+Welcome to my new "Hola Mundo"!
+
+```
+
+Cargando una vista $this->view->assign("content","register.html");
+
+Como se aprecia en el ejemplo recibe 2 parámetros, el primero es el nombre con el que será usado en la vista y el segundo parámetro es la vista en sí ubicados en la siguiente carpeta app/views
+
+phpORM
+
+Es un conjunto de clases destinados a un mejor manejo con el acceso a las bases de datos. Este conjunto de clases pertenece al CORE de framework3 y de él veremos algunas funciones como podremos utilizar tantos en la parte de modelos "app/models" como en los controladores "app/controllers". Si exploran esta carpeta en la siguiente ubicación system/phpORM, se podrá observar una serie de clases para el manejo de la información de las bases de datos, entre los que podemos mencionar a continuación. 1. ORMBase: De esta clase heredan todas las clases que vamos a mencionar a continuación. 1. ORMCondition: Es utilizado por el ORMCollection cuando se quiere utilizar algunos condicionales para la búsqueda de registros. 1. ORMException: Esta clase cubre las posibles excepciones que puedan ocurrir en el funcionamiento de su aplicación. 1. ORMConnection: Obtiene la información necesaria para el acceso a la base de datos, igualmente esta clase contiene una serie de funciones estáticas para el acceso a los mismos. Entre las que podemos mencionar:. * getConnection: Obtiene los parámetros de configuración para el acceso con la base de datos. * Execute: Permite ejecutar cualquier tipo de consulta sql y recibe 2 parámetros. Como se puede apreciar en el siguiente ejemplo: ORMConnection::Execute("select * from cliente", array());
+
+En la sentencia el primer parámetro es la consulta que se desea ejecutar y el segundo parámetro son los posibles parámetros de entrada que puedan tener la consulta. * getOne: Cuando tu sabes que tu consulta te va devolver una sólo valor, en framework3 es mejor utilizar getOne() $count = ORMConnection::getOne("select count(*) * from cliente", array()); * getRow: Cuando tu sabes que tu consulta te va devolver una sólo registro, en framework3 es mejor utilizar getRow(). Cabe resaltar que las dos últimas funciones mencionados tienen la misma estructura que Execute, acerca de los parámetros que éstas funciones reciben.
+
+ORMCollection: Nos permite obtener todo el conjunto de datos de una table e incluso utilizar algunos condicionales para el manejo de estos datos, se apoya del ORMCondition para hacer uso de esos condicionales. A continuación se muestra un ejemplo sobre el uso de esta clase: $clientes = new ORMCollection("Cliente");
+Haciendo uso de los condicionales: $clients->whereAnd("nombreCompleto like", "%".$_REQUEST['term']."%")->whereAnd("estado =", 1);
+
+Restringiendo el número de registros a obtener: return $clients->toArray(10); Así como se ha visto el whereAnd de la misma manera existen el whereOr, Orderby, GroupBy, count, getArray(), toArray(). En el siguiente enlace puede observar algunos ejemplos aqui
+
+Palabras Reservadas
+
+framework3 usa una serie de palabras reservadas para el desarrollo de sus aplicaciones, a continuación se muestran cada una de ellas: * template : Esto hace referencia a la plantilla por defecto que se utilizará cuando se invoque a una función que tiene comportamiento para invocaciones a vistas. A continuación se muestra una línea de código aplicada a esta palabra reservada. protected $template = 'public/mytemplate.html';
+
+Esta sentencia se usa como línea de código inicial dentro de cada controlador y hace referencia a la carpeta public dentro de views especificamente al archivo mytemplate.html que es la plantilla que se utilizará.
+
+tablename: Esta palabra reservada es usada en models para hacer referencia a la tabla a la cual se le aplicará el mapeado e indicar al ORM del framework que características de que tabla va a poseer la clase creada.
+Librerias
+
+Smarty: Permite entender la separación de código en una aplicación, permitiendo una fácil sintaxis para entender.
+Mail: Permite hacer uso de envió de mails, esta librería está configurada con el smtp para permitir el envió correcto de los mensajes. La librería es muy compacta y sólo esta lista para usar.
+
+Smarty: Dentro del Core (la carpeta system del framework3), se encuentra un conjunto de herramientas para un mejor manejo de las variables provenientes del servidor o sintaxis en si de éste. Smarty es una herramienta bastante útil para los desarrolladores ya que les ayuda a separar con más claridad los distintos códigos.
+
+JSON: También viene dentro del Core de framework3 y es una herramienta muy útil para el manejo de los datos del servidor dentro del ámbito del cliente. JSON permite obtener los datos provenientes del servidor en un conjunto de arrays personalizados, esto permitirá a los desarrolladores un mejor manejo dentro de los datos.
+
+JavaScripts Personalizados
+
+Dentro del Core de framework3 se han desarrollado herramientas personalizadas de código JavaScript, los cuales permiten un desarrollo de aplicaciones más versátil. A continuación se mostrarán algunos de los plugins estables dentro del framework3. * DataTable: Es una plugin para el manejo con tablas entre sus características posee estilos ya definidos, manejo con la paginación, mapeado de los datos que recibe en su body. A continuación se presenta un ejemplo del uso de este plugin:
+
+Configuracion basica: ``` 
+$(document).ready(function(){ $("table.dataTable#tabletest").dataTable();
+
+</script>
+Columna1 Columna2 Columna3 Action edit delete
+```
+
+La href:"/ruta/...", hace referencia a un método específico del controlador (método ajax) que nos devolverá los datos.
+- En model el nombre de la clase de cada "td" tiene que ser igual a la columna de tus datos que retornarás por medio de tu metodo ajax sino, no se visualizará.
+2. Configuracion avanzada
+        <script>   
+
+     $(document).ready(function(){
+
+       
+
+            $("table.dataTable#tabletest").bind("rowloaded", function(e, p){
+
+        var obj = p.obj;
+
+        var tr = p.tr;                  
+
+        });
+
+            $("table.dataTable#tabletest").dataTable();    
+
+    });
+
+        </script>
+
+
+
+       
+
+    <table class="dataTable table table-bordered" id="tabletest">
+
+           <thead>
+
+         <tr>         
+
+           <th style="display: none;">
+
+            <a href="/ruta/..." data-params="" class="onload" data-limit="10" root="data" ></a>
+
+           </th>              
+
+           <th >Columna1</th>   
+
+           <th >Columna2</th>   
+
+           <th >Columna3</th>                   
+
+           <th style="width:160px;">Action</th>
+
+         </tr>
+
+           </thead>
+
+           <tfoot></tfoot>
+
+           <tbody>
+
+             <tr class="model" data-pk="idtabletest">             
+
+          <td class="columna1"></td>
+
+          <td class="columna2" ></td>
+
+          <td class="columna3"></td>                    
+
+          <td class="actions">                        
+
+            <a href="#" class="edit"  title="Editar">edit</a>
+
+            <a href="#" class="delete" title="Eliminar" >delete</a>                             
+
+          </td>
+
+         </tr>
+
+           </tbody>
+
+    </table>
+
+
+
+- El metodo rowloaded: Sirve para perzonalizar los valores de las columnas.
+- El atributo data-limit: Sirve en la paginacion para indicar cuantos elemento tendra cada pagina.
+AutoComplete: Es una versión mejorada del autocomplete de jquery-ui, tiene una forma muy sencilla de usar y permite una rápida recogida de datos del elemento que se está usando. A continuación se presenta un ejemplo del uso de este plugin en la parte de la vista del framework3:
+     <input type="text" class="autocomplete" id="producto"
+
+        href="producto/getProducto" root="response.data" 
+
+            label="nombre" val="idProducto" />
+
+Los elementos mostrados a continuación son los parametros básicos que debe contener el input al cual se le aplique el autocomplete para de esta manera obtener la funcionalidad adecuada de este plugin,
+A continuación se muestra un alcance sobre cada parámetro presentado el autocomplete:
+class : Este atributo es importante ya que indica que el input tendrá el comportamiento de autocomplete.
+id : Este atributo es importante ya que mediante a este se hace referencia al elemente de manera única y además que mediante este atributo se pueden hacer referencia a los métodos autocomplete del input.
+href : Hace referencia a un método específico del controlador (método ajax) que nos devolverá los datos cargados sobre lo que se escribió.
+root: Es la referencia de la data proveniente del método ajax en el contralador.
+label : Es el nombre, el cual hace referencia a los registros que se han obtenido y es quien se mostrará al obtener los datos.
+val : Es el valor, el cual hace referencia a los registros que se han obtenido y es el valor identificativo de lo que se ha buscado.
+Manejo Errores
+
+Cree un archivo error.html dentro de app/views, este archivo sirve para tener una mejor respuesta de error. Su contenido puede ser el siguiente:
+          <div class="contenido">
+
+        <div class="item">
+
+          <div class="name">Message</div>
+
+          <div class="info">{$errormessage}</div>
+
+        </div>        
+
+        
+
+        <table class="stack" border="1">
+
+        <tr>
+
+                   <td colspan="3">
+
+                     <h4>List Trace</h4>
+
+                   </td>
+
+                </tr>
+
+        <tr>
+
+           <td>Nro Trace</td>
+
+           <td>file</td>
+
+           <td>line</td>
+
+        </tr>
+
+ 
+
+        {foreach from=$traces item=trace key=key}
+
+                    {if $trace.file neq ''}    
+
+             <tr> 
+
+            <td>{$key}</td>
+
+            <td>{$trace.file}</td>
+
+            <td>{$trace.line}</td>
+
+             </tr>    
+
+            {/if}
+
+        {/foreach}
+
+
+
+         </table> 
+
+          </div>
+
+La variable {$traces} indica el rastreo del error que ha ocurrido.
+La variable {$trace.file} indica la ruta de archivo donde ha ocurrido el error.
+La variable {$trace.line} indica el numero de linea donde ha ocurrido el error.
+La variable {$errormessage} indica el mensaje de error.
